@@ -1,0 +1,33 @@
+{
+  "name": "brune-coffee-backend",
+  "version": "1.0.0",
+  "description": "Brúne Coffee & Kitchen - Backend API",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "dev:no-warn": "node --watch --no-warnings index.js",
+    "migrate": "node scripts/migrateMocks.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^7.4.1",
+    "helmet": "^8.0.0",
+    "joi": "^18.2.3",
+    "jsonwebtoken": "^9.0.3",
+    "mongodb": "7.2",
+    "mongoose": "^9.7.1",
+    "morgan": "^1.11.0",
+    "nodemailer": "^9.0.1",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.8.3"
+  }
+}

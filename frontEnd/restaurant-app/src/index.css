@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Beautiful custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color, #B07B4F);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color, #3B2515);
+}
+
+/* Accessible focus outlines for interactive components */
+*:focus-visible {
+  outline: 2px solid var(--accent-color, #C9925F);
+  outline-offset: 2px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(123, 75, 42, 0.08), transparent 32%),
+    linear-gradient(180deg, #fcf8f2 0%, #f7efe4 100%);
+  color: #2a1b12;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(176, 123, 79, 0.22);
+  color: #2a1b12;
+}
+
+html.dark body {
+  background:
+    radial-gradient(circle at top, rgba(59, 37, 21, 0.3), transparent 32%),
+    linear-gradient(180deg, #111827 0%, #0f0f1a 100%);
+  color: #e5e7eb;
+}
+
+html.dark ::selection {
+  background: rgba(176, 123, 79, 0.35);
+  color: #f3f4f6;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-slide-up {
+  animation: slide-up 0.25s ease-out;
+}

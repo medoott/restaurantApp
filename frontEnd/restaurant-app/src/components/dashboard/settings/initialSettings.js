@@ -1,0 +1,226 @@
+export const initialSettings = {
+  general: {
+    name: "Brúne Coffee & Kitchen",
+    logo: "",
+    coverImage: "",
+    description: "Premium coffee & kitchen experience in the heart of the city. Serving artisanal coffee, fresh pastries, and gourmet meals.",
+    address: "123 Gourmet Street, Downtown District, City",
+    mapsLocation: "https://maps.google.com/?q=Brune+Coffee+Kitchen",
+    phones: "+1 234 567 890, +1 234 567 891",
+    whatsapp: "+1 234 567 890",
+    email: "hello@brunecoffee.com",
+    website: "https://brunecoffee.com",
+    workingHours: [
+      { day: "Monday", enabled: true, open: "08:00", close: "23:00" },
+      { day: "Tuesday", enabled: true, open: "08:00", close: "23:00" },
+      { day: "Wednesday", enabled: true, open: "08:00", close: "23:00" },
+      { day: "Thursday", enabled: true, open: "08:00", close: "23:00" },
+      { day: "Friday", enabled: true, open: "08:00", close: "00:00" },
+      { day: "Saturday", enabled: true, open: "09:00", close: "00:00" },
+      { day: "Sunday", enabled: false, open: "10:00", close: "22:00" },
+    ],
+    timezone: "UTC+02:00",
+    language: "English",
+    currency: "USD ($)",
+    taxPercentage: "8",
+    serviceCharge: "5",
+  },
+
+  branding: {
+    logo: "",
+    favicon: "",
+    primaryColor: "#3B2515",
+    secondaryColor: "#B07B4F",
+    accentColor: "#C9925F",
+    fontFamily: "Poppins",
+    mode: "light",
+  },
+
+  menu: {
+    enableCategories: true,
+    enableProductSearch: true,
+    enableProductRatings: true,
+    enableProductImages: true,
+    showCalories: false,
+    showIngredients: true,
+    markAvailable: true,
+    featuredProducts: true,
+    productSorting: "name-asc",
+  },
+
+  ordering: {
+    enableOnlineOrdering: true,
+    enableCashOrders: true,
+    enableScheduledOrders: true,
+    enableGuestOrders: true,
+    requireCustomerName: true,
+    requirePhoneNumber: true,
+    minOrderAmount: "0",
+    maxOrderAmount: "9999",
+    maxQuantityPerItem: "99",
+    autoGenerateOrderNumber: true,
+    orderPrefix: "ORD-",
+  },
+
+  orderStatuses: {
+    statuses: [
+      { name: "Pending", color: "bg-amber-100 text-amber-700 ring-amber-300" },
+      { name: "Confirmed", color: "bg-sky-100 text-sky-700 ring-sky-300" },
+      { name: "Preparing", color: "bg-orange-100 text-orange-700 ring-orange-300" },
+      { name: "Ready", color: "bg-emerald-100 text-emerald-700 ring-emerald-300" },
+      { name: "Served", color: "bg-indigo-100 text-indigo-700 ring-indigo-300" },
+      { name: "Delivered", color: "bg-stone-100 text-stone-600 ring-stone-300" },
+      { name: "Cancelled", color: "bg-rose-100 text-rose-700 ring-rose-300" },
+    ],
+  },
+
+  payment: {
+    methods: [
+      { key: "cash", enabled: true },
+      { key: "creditCard", enabled: true },
+      { key: "debitCard", enabled: false },
+      { key: "applePay", enabled: true },
+      { key: "googlePay", enabled: true },
+      { key: "stripe", enabled: true },
+      { key: "paypal", enabled: false },
+      { key: "fawry", enabled: false },
+      { key: "vodafoneCash", enabled: false },
+    ],
+  },
+
+  notifications: {
+    events: [
+      { key: "newOrder", enabled: true },
+      { key: "cancelledOrder", enabled: true },
+      { key: "paymentReceived", enabled: true },
+      { key: "readyOrder", enabled: true },
+      { key: "dailyReport", enabled: false },
+      { key: "weeklyReport", enabled: false },
+      { key: "monthlyReport", enabled: false },
+    ],
+    channels: [
+      { key: "browser", enabled: true },
+      { key: "email", enabled: true },
+      { key: "sms", enabled: false },
+      { key: "whatsapp", enabled: false },
+      { key: "telegram", enabled: false },
+    ],
+    soundEnabled: true,
+    volume: 75,
+    sound: "chime",
+  },
+
+  staff: {
+    roles: [
+      { id: "role-owner", name: "Owner", description: "Full system access with all permissions", color: "bg-rose-100 text-rose-700 ring-rose-300", isSystem: true, permissions: ["dashboard.view","dashboard.analytics","orders.view","orders.create","orders.edit","orders.delete","orders.cancel","orders.print","orders.changeStatus","orders.refund","orders.export","products.view","products.create","products.edit","products.delete","products.import","products.export","categories.view","categories.create","categories.edit","categories.delete","kitchen.view","kitchen.accept","kitchen.prepare","kitchen.markReady","kitchen.complete","kitchen.print","tables.view","tables.create","tables.edit","tables.delete","tables.assign","tables.merge","customers.view","customers.create","customers.edit","customers.delete","customers.export","payments.view","payments.process","payments.refund","payments.export","reports.view","reports.export","reports.financial","reports.kitchen","inventory.view","inventory.create","inventory.edit","inventory.delete","inventory.receive","inventory.adjust","inventory.print","employees.view","employees.create","employees.edit","employees.delete","employees.assignRoles","roles.view","roles.create","roles.edit","roles.delete","settings.view","settings.edit","settings.system","reservations.view","reservations.create","reservations.edit","reservations.delete","reservations.approve","notifications.view","notifications.manage","suppliers.view","suppliers.create","suppliers.edit","suppliers.delete","purchaseOrders.view","purchaseOrders.create","purchaseOrders.edit","purchaseOrders.delete","purchaseOrders.approve","waiter.view","waiter.callWaiter","waiter.billRequest","waiter.customerRequests","cleaning.view","cleaning.schedule","activities.view","systemHealth.view","auditLog.view","globalSearch.view"], branchAccess: "all", branchIds: [] },
+      { id: "role-gm", name: "General Manager", description: "Access to all operational and management features", color: "bg-indigo-100 text-indigo-700 ring-indigo-300", isSystem: true, permissions: ["dashboard.view","dashboard.analytics","orders.view","orders.create","orders.edit","orders.delete","orders.cancel","orders.print","orders.changeStatus","orders.refund","orders.export","products.view","products.create","products.edit","products.delete","products.import","products.export","categories.view","categories.create","categories.edit","categories.delete","kitchen.view","kitchen.accept","kitchen.prepare","kitchen.markReady","kitchen.complete","tables.view","tables.create","tables.edit","tables.delete","tables.assign","tables.merge","customers.view","customers.create","customers.edit","customers.delete","customers.export","payments.view","payments.process","payments.refund","payments.export","reports.view","reports.export","reports.financial","inventory.view","inventory.create","inventory.edit","inventory.receive","inventory.adjust","settings.view","settings.edit","reservations.view","reservations.create","reservations.edit","reservations.delete","reservations.approve","notifications.view","notifications.manage","suppliers.view","suppliers.create","suppliers.edit","suppliers.delete","purchaseOrders.view","purchaseOrders.create","purchaseOrders.edit","purchaseOrders.approve","waiter.view","cleaning.view","cleaning.schedule","activities.view","globalSearch.view"], branchAccess: "all", branchIds: [] },
+      { id: "role-bm", name: "Branch Manager", description: "Full access within assigned branch", color: "bg-sky-100 text-sky-700 ring-sky-300", isSystem: true, permissions: ["dashboard.view","orders.view","orders.create","orders.edit","orders.cancel","orders.print","orders.changeStatus","products.view","products.create","products.edit","categories.view","categories.create","categories.edit","categories.delete","kitchen.view","tables.view","tables.create","tables.edit","customers.view","customers.create","customers.edit","payments.view","payments.process","reports.view","inventory.view","inventory.edit","inventory.adjust","reservations.view","reservations.create","reservations.edit","notifications.view","suppliers.view","purchaseOrders.view","waiter.view","cleaning.view","activities.view"], branchAccess: "assigned", branchIds: ["branch-1"] },
+      { id: "role-cashier", name: "Cashier", description: "Process orders and payments at the counter", color: "bg-emerald-100 text-emerald-700 ring-emerald-300", isSystem: true, permissions: ["dashboard.view","orders.view","orders.create","orders.edit","orders.changeStatus","orders.print","products.view","categories.view","customers.view","customers.create","payments.view","payments.process"], branchAccess: "assigned", branchIds: ["branch-1"] },
+      { id: "role-kitchen", name: "Kitchen Staff", description: "View and manage orders in the kitchen", color: "bg-orange-100 text-orange-700 ring-orange-300", isSystem: true, permissions: ["dashboard.view","orders.view","orders.changeStatus","products.view","kitchen.view","kitchen.accept","kitchen.prepare","kitchen.markReady","inventory.view"], branchAccess: "assigned", branchIds: ["branch-1"] },
+      { id: "role-waiter", name: "Waiter", description: "Take orders and serve customers", color: "bg-amber-100 text-amber-700 ring-amber-300", isSystem: true, permissions: ["dashboard.view","orders.view","orders.create","orders.edit","orders.cancel","products.view","customers.view","customers.create","tables.view","waiter.view","waiter.callWaiter","waiter.billRequest","waiter.customerRequests"], branchAccess: "assigned", branchIds: ["branch-1"] },
+      { id: "role-delivery", name: "Delivery", description: "View and update delivery order status", color: "bg-lime-100 text-lime-700 ring-lime-300", isSystem: true, permissions: ["dashboard.view","orders.view","orders.changeStatus"], branchAccess: "assigned", branchIds: ["branch-1"] },
+      { id: "role-accountant", name: "Accountant", description: "Financial reports and payment management", color: "bg-stone-100 text-stone-600 ring-stone-300", isSystem: true, permissions: ["dashboard.view","dashboard.analytics","payments.view","payments.refund","payments.export","reports.view","reports.export","reports.financial","orders.view","orders.refund","customers.view"], branchAccess: "all", branchIds: [] },
+      { id: "role-inventory", name: "Inventory Manager", description: "Manage stock, ingredients, and purchase orders", color: "bg-teal-100 text-teal-700 ring-teal-300", isSystem: true, permissions: ["dashboard.view","inventory.view","inventory.create","inventory.edit","inventory.receive","inventory.adjust","inventory.print","products.view","orders.view","suppliers.view","purchaseOrders.view","purchaseOrders.create","purchaseOrders.approve"], branchAccess: "all", branchIds: [] },
+      { id: "role-support", name: "Customer Support", description: "Handle customer inquiries and issues", color: "bg-violet-100 text-violet-700 ring-violet-300", isSystem: true, permissions: ["dashboard.view","customers.view","customers.create","customers.edit","orders.view","orders.cancel","orders.refund","payments.view","payments.refund"], branchAccess: "all", branchIds: [] },
+    ],
+    users: [
+      { id: "usr-1", name: "Ahmed Hassan", username: "ahmed.hassan", email: "ahmed@brunecoffee.com", phone: "+1 234 567 001", avatar: "", roleId: "role-owner", status: "active", lastLogin: "2026-07-01T09:23:00", createdAt: "2024-01-15T08:00:00", branchAccess: "all", branchIds: [], twoFactorEnabled: true, failedLoginAttempts: 0, locked: false, extraPermissions: [], revokedPermissions: [] },
+      { id: "usr-2", name: "Sarah Johnson", username: "sarah.j", email: "sarah@brunecoffee.com", phone: "+1 234 567 002", avatar: "", roleId: "role-gm", status: "active", lastLogin: "2026-07-01T10:15:00", createdAt: "2024-03-20T08:00:00", branchAccess: "all", branchIds: [], twoFactorEnabled: true, failedLoginAttempts: 0, locked: false, extraPermissions: [], revokedPermissions: [] },
+      { id: "usr-3", name: "Marco Rossi", username: "marco.r", email: "marco@brunecoffee.com", phone: "+1 234 567 003", avatar: "", roleId: "role-bm", status: "active", lastLogin: "2026-06-30T14:30:00", createdAt: "2024-06-01T08:00:00", branchAccess: "assigned", branchIds: ["branch-1"], twoFactorEnabled: false, failedLoginAttempts: 1, locked: false, extraPermissions: [], revokedPermissions: [] },
+      { id: "usr-4", name: "Layla Mahmoud", username: "layla.m", email: "layla@brunecoffee.com", phone: "+1 234 567 004", avatar: "", roleId: "role-cashier", status: "active", lastLogin: "2026-07-01T08:45:00", createdAt: "2024-09-10T08:00:00", branchAccess: "assigned", branchIds: ["branch-1"], twoFactorEnabled: false, failedLoginAttempts: 0, locked: false, extraPermissions: [], revokedPermissions: [] },
+      { id: "usr-5", name: "Chef Omar", username: "omar.chef", email: "omar@brunecoffee.com", phone: "+1 234 567 005", avatar: "", roleId: "role-kitchen", status: "active", lastLogin: "2026-07-01T07:00:00", createdAt: "2024-02-14T08:00:00", branchAccess: "assigned", branchIds: ["branch-1"], twoFactorEnabled: false, failedLoginAttempts: 0, locked: false, extraPermissions: ["inventory.edit", "inventory.receive", "reports.kitchen"], revokedPermissions: [] },
+      { id: "usr-6", name: "Emma Wilson", username: "emma.w", email: "emma@brunecoffee.com", phone: "+1 234 567 006", avatar: "", roleId: "role-waiter", status: "locked", lastLogin: "2026-06-30T16:00:00", createdAt: "2024-11-05T08:00:00", branchAccess: "assigned", branchIds: ["branch-1"], twoFactorEnabled: false, failedLoginAttempts: 3, locked: true, extraPermissions: [], revokedPermissions: [] },
+      { id: "usr-7", name: "David Chen", username: "david.c", email: "david@brunecoffee.com", phone: "+1 234 567 007", avatar: "", roleId: "role-delivery", status: "active", lastLogin: "2026-06-29T18:30:00", createdAt: "2025-01-20T08:00:00", branchAccess: "assigned", branchIds: ["branch-1"], twoFactorEnabled: false, failedLoginAttempts: 0, locked: false, extraPermissions: [], revokedPermissions: [] },
+      { id: "usr-8", name: "Fatima Al-Rashid", username: "fatima.ar", email: "fatima@brunecoffee.com", phone: "+1 234 567 008", avatar: "", roleId: "role-accountant", status: "active", lastLogin: "2026-07-01T11:00:00", createdAt: "2024-08-12T08:00:00", branchAccess: "all", branchIds: [], twoFactorEnabled: true, failedLoginAttempts: 0, locked: false, extraPermissions: [], revokedPermissions: [] },
+      { id: "usr-9", name: "James Miller", username: "james.m", email: "james@brunecoffee.com", phone: "+1 234 567 009", avatar: "", roleId: "role-inventory", status: "locked", lastLogin: "2026-06-28T09:15:00", createdAt: "2024-07-01T08:00:00", branchAccess: "all", branchIds: [], twoFactorEnabled: false, failedLoginAttempts: 5, locked: true, extraPermissions: [], revokedPermissions: [] },
+      { id: "usr-10", name: "Nora Williams", username: "nora.w", email: "nora@brunecoffee.com", phone: "+1 234 567 010", avatar: "", roleId: "role-support", status: "inactive", lastLogin: "2026-06-15T13:00:00", createdAt: "2025-03-01T08:00:00", branchAccess: "all", branchIds: [], twoFactorEnabled: false, failedLoginAttempts: 0, locked: false, extraPermissions: [], revokedPermissions: [] },
+    ],
+    auditLogs: [
+      { id: "log-1", userId: "usr-1", userName: "Ahmed Hassan", action: "Updated system settings", module: "Settings", date: "2026-07-01T10:30:00", ip: "192.168.1.10", device: "Chrome / macOS", status: "success" },
+      { id: "log-2", userId: "usr-2", userName: "Sarah Johnson", action: "Modified product #1042", module: "Products", date: "2026-07-01T10:15:00", ip: "192.168.1.11", device: "Firefox / Windows", status: "success" },
+      { id: "log-3", userId: "usr-4", userName: "Layla Mahmoud", action: "Processed payment for order ORD-1056", module: "Payments", date: "2026-07-01T09:45:00", ip: "192.168.1.12", device: "Safari / iPad", status: "success" },
+      { id: "log-4", userId: "usr-3", userName: "Marco Rossi", action: "Attempted to access financial reports", module: "Analytics", date: "2026-07-01T09:30:00", ip: "192.168.1.13", device: "Chrome / Android", status: "denied" },
+      { id: "log-5", userId: "usr-1", userName: "Ahmed Hassan", action: "Created new user Emma Wilson", module: "Employees", date: "2026-06-30T16:00:00", ip: "192.168.1.10", device: "Chrome / macOS", status: "success" },
+      { id: "log-6", userId: "usr-5", userName: "Chef Omar", action: "Updated order status ORD-1050 to Ready", module: "Orders", date: "2026-06-30T14:22:00", ip: "192.168.1.14", device: "Chrome / Windows", status: "success" },
+      { id: "log-7", userId: "usr-9", userName: "James Miller", action: "Adjusted stock for Espresso beans", module: "Inventory", date: "2026-06-30T11:00:00", ip: "192.168.1.15", device: "Chrome / macOS", status: "success" },
+      { id: "log-8", userId: "usr-6", userName: "Emma Wilson", action: "Failed login attempt #3", module: "Auth", date: "2026-06-30T10:30:00", ip: "192.168.1.16", device: "Safari / iPhone", status: "failed" },
+      { id: "log-9", userId: "usr-2", userName: "Sarah Johnson", action: "Exported monthly sales report", module: "Reports", date: "2026-06-30T09:00:00", ip: "192.168.1.11", device: "Firefox / Windows", status: "success" },
+      { id: "log-10", userId: "usr-8", userName: "Fatima Al-Rashid", action: "Processed refund for order ORD-1048", module: "Payments", date: "2026-06-29T15:45:00", ip: "192.168.1.17", device: "Chrome / macOS", status: "success" },
+    ],
+  },
+
+  security: {
+    twoFactorEnabled: false,
+    autoLogoutTimer: "30",
+    passwordPolicy: "high",
+  },
+
+  backup: {
+    dailyBackup: true,
+    weeklyBackup: false,
+    monthlyBackup: true,
+  },
+
+  reports: {
+    dailyReports: true,
+    weeklyReports: true,
+    monthlyReports: true,
+    yearlyReports: false,
+    pdf: true,
+    excel: true,
+    csv: false,
+  },
+
+  customer: {
+    codeFormat: "CUST-{NUMBER}",
+    loyaltyPoints: true,
+    rewards: true,
+    birthdayRewards: false,
+    referralRewards: false,
+    customerNotes: true,
+    pointsPerDollar: "10",
+  },
+
+  inventory: {
+    lowStockAlert: true,
+    automaticStockUpdate: true,
+    ingredientTracking: true,
+    purchaseAlerts: false,
+    stockThreshold: "20",
+  },
+
+  integrations: {
+    integrations: [
+      { key: "stripe", enabled: true, fields: [{ key: "publishableKey", value: "" }, { key: "secretKey", value: "" }] },
+      { key: "paypal", enabled: false, fields: [{ key: "clientId", value: "" }, { key: "clientSecret", value: "" }] },
+      { key: "googleMaps", enabled: false, fields: [{ key: "apiKey", value: "" }] },
+      { key: "cloudinary", enabled: false, fields: [{ key: "cloudName", value: "" }, { key: "apiKey", value: "" }, { key: "apiSecret", value: "" }] },
+      { key: "firebase", enabled: false, fields: [{ key: "projectId", value: "" }, { key: "apiKey", value: "" }] },
+      { key: "smtp", enabled: false, fields: [{ key: "host", value: "" }, { key: "port", value: "587" }, { key: "username", value: "" }, { key: "password", value: "" }] },
+      { key: "smsGateway", enabled: false, fields: [{ key: "provider", value: "" }, { key: "apiKey", value: "" }] },
+      { key: "whatsapp", enabled: false, fields: [{ key: "phoneNumberId", value: "" }, { key: "accessToken", value: "" }] },
+    ],
+  },
+
+  api: {
+    apiKey: "",
+    webhookUrl: "https://api.brunecoffee.com/webhooks",
+    corsOrigins: "https://brunecoffee.com\nhttps://admin.brunecoffee.com",
+    rateLimit: "300",
+  },
+
+  appearance: {
+    sidebarStyle: "default",
+    dashboardLayout: "grid",
+    tableDensity: "comfortable",
+    cardStyle: "elevated",
+    animations: true,
+    dashboardWidgets: ["Revenue Chart", "Orders Overview", "Top Products", "Recent Orders"],
+    bannerUrl: "",
+  },
+
+  system: {
+    maintenanceMode: false,
+    debugMode: false,
+  },
+}
