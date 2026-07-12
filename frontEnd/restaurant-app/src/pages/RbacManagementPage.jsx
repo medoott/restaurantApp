@@ -1,13 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import {
-  Shield, Users, History, Search, Save, RotateCcw, Check, X,
-  ChevronDown, ChevronRight, UserPlus, UserMinus, Copy, AlertTriangle,
-} from "lucide-react";
-import PermissionMatrix from "../components/dashboard/settings/rbac/PermissionMatrix.jsx";
-import { PERMISSION_GROUPS } from "../components/dashboard/settings/rbac/permissionData.js";
-
-const TABS = [
-  { key: "roles", label: "Roles", icon: Shield },
+les", label: "Roles", icon: Shield },
   { key: "users", label: "User Permissions", icon: Users },
   { key: "audit", label: "Audit Log", icon: History },
 ];
@@ -319,7 +312,7 @@ export default function RbacManagementPage({ apiRequest }) {
   );
 }
 
-function RoleEditor({ role, roles, onSave, onClose }) {
+function RoleEditor({ role, _roles, onSave, onClose }) {
   const [name, setName] = useState(role.name || "");
   const [label, setLabel] = useState(role.label || "");
   const [description, setDescription] = useState(role.description || "");

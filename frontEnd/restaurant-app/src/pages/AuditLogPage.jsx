@@ -23,7 +23,7 @@ function formatDateShort(dateStr) {
 const MODULES = ["All", "Orders", "Products", "Tables", "Inventory", "Customers", "Suppliers", "Reservations", "Employees", "System", "Auth"];
 const ACTION_TYPES = ["All", "create", "update", "delete", "login", "logout", "error", "export", "import", "backup"];
 
-export default function AuditLogPage({ permissions = { can: () => false } }) {
+export default function AuditLogPage({ permissi_ons = { can: () => false } }) {
   const [logs, setLogs] = useState([]);
   const [backup, setBackup] = useState(null);
   const [loading, setLoading] = useState(true);

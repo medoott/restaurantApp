@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, DollarSign, Receipt, Printer } from "lucide-react";
+import { X, DollarSign, Printer } from "lucide-react";
 import * as paymentService from "../../services/payment.js";
 
 export default function PaymentModal({ open, onClose, order, onPaid }) {
@@ -8,7 +8,7 @@ export default function PaymentModal({ open, onClose, order, onPaid }) {
   const [discount, setDiscount] = useState(0);
   const [discountType, setDiscountType] = useState("fixed");
   const [loading, setLoading] = useState(false);
-  const [session, setSession] = useState(null);
+  const [_session, setSession] = useState(null);
   const [receipt, setReceipt] = useState(null);
   const [error, setError] = useState("");
 

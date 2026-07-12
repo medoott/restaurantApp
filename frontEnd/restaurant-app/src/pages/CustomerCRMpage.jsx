@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Search, X, Users, Phone, Mail, Star, Clock, DollarSign, MapPin, MessageSquare, Heart, Award, Edit3, Trash2, AlertCircle, CheckCircle, ChevronLeft, ChevronRight, ArrowUpDown, User } from "lucide-react";
-import { fetchAllCustomers, fetchCustomer, fetchCustomerByPhone, createCustomer, updateCustomer, deleteCustomer, addStaffNote, recordVisit, addFavoriteProduct, removeFavoriteProduct, updateLoyaltyPoints, fetchCustomerAnalytics, fetchTopCustomers, fetchCustomerSegmentation, fetchCustomerStats } from "../services/data.js";
-
-const LOYALTY_TIERS = ["Bronze", "Silver", "Gold", "Platinum", "VIP"];
+import { fetchAllCustomers, fetchCustomer, fetchCustomerByPhone, createCustomer, updateCustomer, deleteCustomer, addStaffNote, recordVisit, addFavoriteProduct, removeFavoriteProduct, updateLoyaltyPoints, fetchCustomerAnalytics, fetchTopCustomers, fetchCustomerStats }Silver", "Gold", "Platinum", "VIP"];
 
 const LOYALTY_BADGE = {
   Bronze: "bg-amber-100 text-amber-700 ring-1 ring-amber-300",
@@ -37,7 +35,7 @@ function formatCurrency(val) {
   return `$${Number(val).toFixed(2)}`;
 }
 
-export default function CustomerCRMpage({ permissions = { can: () => false } }) {
+export default function CustomerCRMpage({ _permissions = { can: () => false } }) {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [notif, setNotif] = useState(null);
@@ -178,7 +176,7 @@ export default function CustomerCRMpage({ permissions = { can: () => false } }) 
       items: visitForm.items ? visitForm.items.split(",").map(s => s.trim()).filter(Boolean) : [],
     };
     try {
-      const result = await recordVisit(id, payload);
+      const _result = await recordVisit(id, payload);
       showNotif("Visit recorded");
       setVisitModal(false);
       setVisitForm({ date: new Date().toISOString().split("T")[0], totalSpent: "", items: "" });
@@ -195,7 +193,7 @@ export default function CustomerCRMpage({ permissions = { can: () => false } }) 
     if (!detailModal || !noteText.trim()) return;
     const id = detailModal.id || detailModal._id;
     try {
-      const result = await addStaffNote(id, { note: noteText.trim(), addedBy: "Staff" });
+      const _result = await addStaffNote(id, { note: noteText.trim(), addedBy: "Staff" });
       showNotif("Note added");
       setNoteModal(false);
       setNoteText("");
@@ -238,7 +236,7 @@ export default function CustomerCRMpage({ permissions = { can: () => false } }) 
     const id = detailModal.id || detailModal._id;
     if (!loyaltyForm.points && !loyaltyForm.reason) { showNotif("Enter points or reason", "error"); return; }
     try {
-      const result = await updateLoyaltyPoints(id, { points: Number(loyaltyForm.points) || 0, reason: loyaltyForm.reason.trim() });
+      const _result = await updateLoyaltyPoints(id, { points: Number(loyaltyForm.points) || 0, reason: loyaltyForm.reason.trim() });
       showNotif("Loyalty points updated");
       setLoyaltyModal(false);
       setLoyaltyForm({ points: "", reason: "" });

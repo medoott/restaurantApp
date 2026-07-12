@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { Bell, Check, Clock, MapPin, Package, AlertTriangle, User } from "lucide-react";
+import { Bell, Check, Clock, MapPin, Package, User }lucide-react";
 
-export default function WaiterPage({ apiRequest, userId }) {
+export default function WaiterPage({ apiRequest, _userId }) {
   const [activeTab, setActiveTab] = useState("requests");
   const [requests, setRequests] = useState([]);
   const [deliveries, setDeliveries] = useState([]);
-  const [pendingCounts, setPendingCounts] = useState({});
-  const [tables, setTables] = useState([]);
+  const [_pendingCounts, setPendingCounts] = useState({});
+  const [_tables, _setTables] = useState([]);
 
   useEffect(() => {
     loadData();

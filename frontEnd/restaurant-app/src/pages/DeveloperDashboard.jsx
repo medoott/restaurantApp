@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { Wrench, Key, Settings, ScrollText, Activity, LogOut, Cpu, Eye, EyeOff } from "lucide-react";
+import { Wrench, Settings, ScrollText, Activity, LogOut, Cpu, Eye, EyeOff } from "lucide-react";
 import * as devService from "../services/developer.js";
 
 const TABS = [

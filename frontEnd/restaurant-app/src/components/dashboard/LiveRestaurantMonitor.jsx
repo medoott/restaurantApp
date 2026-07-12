@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
 import {
   Clock, ChefHat, ShoppingBag, Truck,
   Utensils, Receipt, CreditCard, CheckCircle,
-  AlertTriangle, TrendingUp, Users, DollarSign,
 } from "lucide-react";
 import useSocket from "../../hooks/useSocket.js";
 import { apiRequest } from "../../services/api.js";

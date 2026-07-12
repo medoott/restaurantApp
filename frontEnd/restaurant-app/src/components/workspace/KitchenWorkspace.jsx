@@ -16,7 +16,7 @@ const formatTime = (minutes) => {
   return `${Math.floor(minutes / 60)}h ${minutes % 60}m`;
 };
 
-export default function KitchenWorkspace({ user, access = {} }) {
+export default function KitchenWorkspace({ user, _access = {} }) {
   const [orders, setOrders] = useState({ pending: [], preparing: [], ready: [] });
   const [stats, setStats] = useState({ new: 0, preparing: 0, ready: 0, delayed: 0, todayCompleted: 0, avgPrepTimeMin: 0 });
   const [loading, setLoading] = useState(true);

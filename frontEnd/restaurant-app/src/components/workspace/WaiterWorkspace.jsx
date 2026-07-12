@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Coffee, Bell, ShoppingBag, CheckCircle, Loader, Clock, Users, Utensils, Droplets, Sparkles, Flame, HelpCircle, X } from "lucide-react";
-import { api } from "../../services/api.js";
+import { Coffee, Bell, ShoppingBag, CheckCircle, Loader, Clock, Users, Utensils, Droplets, Sparkles, Flame, HelpCircle }services/api.js";
 import { useToast } from "../../hooks/useToast.jsx";
 
 const REQUEST_LABELS = {
@@ -39,7 +38,7 @@ function timeElapsed(dateString) {
   return `${hrs}h ${mins % 60}m`;
 }
 
-export default function WaiterWorkspace({ user, access = {} }) {
+export default function WaiterWorkspace({ user, _access = {} }) {
   const toast = useToast();
   const [activeTab, setActiveTab] = useState("tables");
   const [tables, setTables] = useState([]);

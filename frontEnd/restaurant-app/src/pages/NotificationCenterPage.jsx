@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Bell, BellRing, CheckCheck, Trash2, Package, Users, Calendar, AlertTriangle, Clock, Coffee, X } from "lucide-react";
+import { Bell, BellRing, CheckCheck, Trash2, Package, Users, Calendar, AlertTriangle, Clock, Coffee } from "lucide-react";
 
 const NOTIFICATION_TEMPLATES = [
   { icon: Clock, iconBg: "bg-sky-100 text-sky-600", title: "Order #1042 is ready for pickup", message: "Customer order has been prepared and is waiting at the counter." },
@@ -43,7 +43,7 @@ function generateInitialNotifications() {
   }).sort((a, b) => b.timestamp - a.timestamp);
 }
 
-export default function NotificationCenterPage({ permissions = { can: () => false } }) {
+export default function NotificationCenterPage({ _permissions = { can: () => false } }) {
   const [notifications, setNotifications] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
   const [loaded, setLoaded] = useState(false);

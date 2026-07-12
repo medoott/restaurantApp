@@ -8,7 +8,6 @@ import StatCard from "../components/ui/StatCard.jsx";
 import OrdersTable from "../components/dashboard/OrdersTable.jsx";
 import ProductsTable from "../components/products/ProductsTable.jsx";
 import CategoriesGrid from "../components/products/CategoriesGrid.jsx";
-import ReportsView from "../components/dashboard/ReportsView.jsx";
 import SettingsView from "../components/dashboard/SettingsView.jsx";
 import InventoryView from "../components/dashboard/InventoryView.jsx";
 import ErrorBoundary from "../components/ui/ErrorBoundary.jsx";
@@ -62,7 +61,7 @@ const SIDEBAR_CONFIG = [
 ];
 
 export default function DashboardPage({
-  orders,
+  _orders,
   products,
   shortages,
   apiRequest,

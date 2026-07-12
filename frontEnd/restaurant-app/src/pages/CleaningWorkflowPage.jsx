@@ -4,7 +4,7 @@ import { Check, Play, RotateCcw, Clock, Sparkles, AlertTriangle } from "lucide-r
 export default function CleaningWorkflowPage({ apiRequest }) {
   const [cleaningTables, setCleaningTables] = useState([]);
   const [stats, setStats] = useState(null);
-  const [history, setHistory] = useState(null);
+  const [_history, setHistory] = useState(null);
 
   useEffect(() => {
     loadData();
@@ -130,7 +130,7 @@ export default function CleaningWorkflowPage({ apiRequest }) {
   );
 }
 
-function StatCard({ label, value, color, bg }) {
+function StatCard({ label, value, color, b_g }) {
   return (
     <div className="bg-white rounded-2xl p-4 ring-1 ring-[#EDE1CF]">
       <p className="text-xs text-[#A9805F]">{label}</p>

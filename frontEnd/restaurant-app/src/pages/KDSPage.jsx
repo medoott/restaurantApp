@@ -10,7 +10,7 @@ import {
 } from "../services/data.js";
 import { KDSOrderSkeleton } from "../components/ui/Skeleton.jsx";
 
-export default function KDSPage({ permissions = { can: () => false } }) {
+export default function KDSPage({ _permissions = { can: () => false } }) {
   const [orders, setOrders] = useState({ pending: [], preparing: [], ready: [] });
   const [stats, setStats] = useState({ new: 0, preparing: 0, ready: 0, delayed: 0, todayCompleted: 0, avgPrepTimeMin: 0 });
   const [loading, setLoading] = useState(true);

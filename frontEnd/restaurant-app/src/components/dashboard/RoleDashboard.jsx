@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { LayoutGrid, ClipboardList, Package, Users, Coffee, SquareStack, CalendarDays, ChefHat, SprayCan, Receipt, Bell } from "lucide-react";
+import { LayoutGrid, ClipboardList, Package, Users, Coffee, SquareStack, CalendarDays, ChefHat, Receipt, Bell }react";
 import GuestQueuePanel from "../host/GuestQueuePanel.jsx";
 
 const ROLE_CONFIGS = {

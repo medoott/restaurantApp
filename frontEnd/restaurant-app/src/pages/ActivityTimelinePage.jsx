@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
-import { fetchOrderTimeline, fetchTimelineEvents } from "../services/data.js";
+import { useCallback, useState } from "react";
+import { fetchOrderTimeline } from "../services/data.js";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Clock, CheckCircle2, ChefHat, Utensils, Truck, Package, X, Filter, RotateCcw, AlertCircle } from "lucide-react";
+import { Search, Clock, CheckCircle2, ChefHat, Utensils, Truck, Package, Filter, RotateCcw, AlertCircle } from "lucide-react";
 
 const EVENT_META = {
   created: { label: "Order Created", icon: Clock, color: "text-sky-600", dot: "bg-sky-400", bg: "bg-sky-50 ring-sky-200" },
@@ -14,7 +14,7 @@ const EVENT_META = {
 
 const ALL_EVENT_TYPES = Object.keys(EVENT_META);
 
-export default function ActivityTimelinePage({ permissions = { can: () => false } }) {
+export default function ActivityTimelinePage({ _permissions = { can: () => false } }) {
   const [orderId, setOrderId] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [events, setEvents] = useState([]);

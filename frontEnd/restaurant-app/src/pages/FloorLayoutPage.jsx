@@ -52,7 +52,7 @@ const STATUS_BG = {
   out_of_service: "bg-red-50 text-red-700 border-red-200",
 };
 
-const MOCK_TABLES = [
+const _MOCK_TABLES = [
   { _id: "mock1", tableNumber: 1, capacity: 2, status: "available", section: "Indoor", x: 5, y: 8, guestCount: 0, notes: "Near window", isLocked: false },
   { _id: "mock2", tableNumber: 2, capacity: 4, status: "occupied", section: "Indoor", x: 22, y: 8, guestCount: 3, notes: "", isLocked: false },
   { _id: "mock3", tableNumber: 3, capacity: 4, status: "dining", section: "Indoor", x: 39, y: 8, guestCount: 4, notes: "Birthday celebration", isLocked: false },
@@ -135,7 +135,7 @@ export default function FloorLayoutPage() {
     });
   }, [tables, activeSection, searchQuery]);
 
-  const handleSocketTableUpdate = useCallback((data) => {
+  const handleSocketTableUpdate = useCallback((_data) => {
     loadTablesRef.current?.();
   }, []);
 

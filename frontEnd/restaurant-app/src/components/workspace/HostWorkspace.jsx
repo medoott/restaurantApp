@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { UserPlus, Users, Clock, Table2, Star, X, Bell, Check, Search, Loader } from "lucide-react";
 import { api } from "../../services/api.js";
 
-export default function HostWorkspace({ user, access = {} }) {
+export default function HostWorkspace({ _user, _access = {} }) {
   const [tab, setTab] = useState("arrival");
   const [loading, setLoading] = useState(false);
   const [notif, setNotif] = useState("");
@@ -46,7 +46,7 @@ export default function HostWorkspace({ user, access = {} }) {
     return () => clearInterval(iv);
   }, [loadQueue]);
 
-  const floorRefreshRef = useCallback(() => {
+  const _floorRefreshRef = useCallback(() => {
     if (tab === "floor") loadTables();
   }, [tab, loadTables]);
 

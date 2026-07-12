@@ -49,7 +49,7 @@ function ResultItem({ item, groupKey }) {
   );
 }
 
-export default function GlobalSearchPage({ permissions = { can: () => false } }) {
+export default function GlobalSearchPage({ permissions = { can: (_) => false } }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);

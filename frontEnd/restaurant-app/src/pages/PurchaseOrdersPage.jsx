@@ -32,7 +32,7 @@ function formatCurrency(val) {
 
 const INITIAL_LINE = { itemId: "", itemName: "", quantity: 1, unitPrice: 0 };
 
-export default function PurchaseOrdersPage({ permissions = { can: () => false } }) {
+export default function PurchaseOrdersPage({ _permissions = { can: () => false } }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [notif, setNotif] = useState(null);

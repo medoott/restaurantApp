@@ -1,10 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
-import { Users, Clock, UserPlus, Search, X, Bell, Check, ClipboardList, Table2, Star } from "lucide-react";
-import { api } from "../services/api.js";
-import { fetchAllTables } from "../services/data.js";
+import { useState, useEffect } from "react";
+import { Users, Clock, UserPlus, X, Bell, Check, ClipboardList, Table2, Star } from "lucide-react";
 
 export default function HostDashboardPage({ apiRequest }) {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [_activeTab, _setActiveTab] = useState("overview");
   const [queue, setQueue] = useState([]);
   const [hostDashboard, setHostDashboard] = useState(null);
   const [tables, setTables] = useState([]);

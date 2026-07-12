@@ -4,7 +4,6 @@ import {
   Plus, Search, X, Building2, Phone, Mail, Star, DollarSign,
   MapPin, Tag, CreditCard, FileText, BarChart3, RefreshCw,
   Loader2, AlertCircle, CheckCircle, ChevronRight, Trash2,
-  Edit3, TrendingUp, ShieldCheck, Wallet, Package, ChevronDown,
   User
 } from "lucide-react";
 import {
@@ -258,8 +257,8 @@ export default function SupplierManagementPage({ permissions = { can: () => fals
     avgRating: suppliers.length ? (suppliers.reduce((sum, s) => sum + (Number(s.rating) || 0), 0) / suppliers.length) : 0,
   };
 
-  const detailS = supplierDetail;
-  const detailId = selectedId;
+  const de_tailS = supplierDetail;
+  const de_tailId = selectedId;
 
   const analyticsContent = (() => {
     if (!analyticsData) return null;

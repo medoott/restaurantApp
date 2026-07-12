@@ -31,7 +31,7 @@ const TIMESLOTS = [
 
 const SECTIONS = ["Main Hall", "Terrace", "VIP Room", "Garden", "Bar"];
 
-function formatTime(dateStr, timeStr) {
+function _formatTime(dateStr, timeStr) {
   if (timeStr) return timeStr;
   if (!dateStr) return "";
   try {
@@ -50,7 +50,7 @@ function formatDate(dateStr) {
   }
 }
 
-function to12h(time) {
+function _to12h(time) {
   if (!time) return "";
   try {
     const [h, m] = time.includes(":") ? time.split(":").map(Number) : [0, 0];

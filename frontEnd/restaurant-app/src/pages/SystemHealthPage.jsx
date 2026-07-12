@@ -50,7 +50,7 @@ function formatBytes(bytes) {
   return `${mb.toFixed(1)} MB`;
 }
 
-export default function SystemHealthPage({ permissions = { can: () => false } }) {
+export default function SystemHealthPage({ permissi_ons = { can: () => false } }) {
   const [health, setHealth] = useState(null);
   const [errorLogs, setErrorLogs] = useState([]);
   const [backup, setBackup] = useState(null);

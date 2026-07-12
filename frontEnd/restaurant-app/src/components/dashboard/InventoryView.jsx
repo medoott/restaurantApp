@@ -18,9 +18,6 @@ import {
   transferStockBetweenItems,
 } from "../../services/data.js";
 import {
-  LineChart, BarChart, PieChart,
-  ResponsiveContainer, Tooltip, Legend,
-  XAxis, YAxis, CartesianGrid, Line, Bar, Pie, Cell,
 } from "recharts";
 
 const STATUS_STYLES = {
@@ -72,7 +69,7 @@ function exportToCSV(filename, headers, rows) {
   URL.revokeObjectURL(url);
 }
 
-export default function InventoryView({ apiRequest }) {
+export default function InventoryView({ _apiRequest }) {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [items, setItems] = useState([]);
   const [summary, setSummary] = useState(null);
@@ -103,10 +100,10 @@ export default function InventoryView({ apiRequest }) {
 
   const [analyticsData, setAnalyticsData] = useState(null);
   const [analyticsPeriod, setAnalyticsPeriod] = useState("monthly");
-  const [consumptionData, setConsumptionData] = useState(null);
+  const [_consumptionData, _setConsumptionData] = useState(null);
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
 
-  const [exporting, setExporting] = useState(false);
+  const [_exporting, _setExporting] = useState(false);
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -211,8 +208,8 @@ export default function InventoryView({ apiRequest }) {
     { label: "Near Expiration", value: summary.nearExpiration, accent: "bg-orange-400" },
   ] : [];
 
-  const criticalAlerts = alerts.filter((a) => a.severity === "critical");
-  const highAlerts = alerts.filter((a) => a.severity === "high");
+  const _criticalAlerts = alerts.filter((a) => a.severity === "critical");
+  const _highAlerts = alerts.filter((a) => a.severity === "high");
 
   const tabs = [
     { id: "dashboard", label: "Dashboard", icon: Package },
@@ -406,7 +403,7 @@ export default function InventoryView({ apiRequest }) {
 }
 
 function DashboardSection({
-  loading, items, summary, kpiCards,
+  loading, items, summ_ary, kpiCards,
   search, setSearch, categoryFilter, setCategoryFilter,
   statusFilter, setStatusFilter, page, setPage, pages, total,
   onAdd, onTransfer, onExport,

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchSalesReport, fetchOrdersReport, fetchProductsReport, fetchInventoryReport, fetchCustomerReport, fetchWaiterReport, fetchTableReport, fetchPaymentReport } from "../services/data.js";
 
 const REPORTS = [
@@ -445,7 +445,7 @@ const REPORT_COMPONENTS = {
   payments: PaymentReport,
 };
 
-export default function AdvancedReportsPage({ permissions = { can: () => false } }) {
+export default function AdvancedReportsPage({ permissions = { _can: () => false } }) {
   const [activeTab, setActiveTab] = useState("sales");
   const [period, setPeriod] = useState("monthly");
 

@@ -3,9 +3,9 @@ import { Coffee } from "lucide-react";
 export default function Logo({ size = "md" }) {
   const dims = size === "lg" ? "w-14 h-14 text-xl" : "w-10 h-10 text-base";
   return (
-    <div className="flex items-center gap-2.5">
+    <div className="flex items-center gap-2.5" aria-label="Brúne home">
       <div
-        className={`${dims} rounded-full bg-gradient-to-br from-[#7B4B2A] to-[#3B2515] flex items-center justify-center shadow-md shadow-[#3B2515]/30`}
+        className={`${dims} rounded-full bg-gradient-to-br from-[#7B4B2A] to-[#3B2515] flex items-center justify-center shadow-md shadow-[#3B2515]/30 ring-1 ring-[#EDE1CF]/60`}
       >
         <Coffee
           className="text-[#F3E5D3]"

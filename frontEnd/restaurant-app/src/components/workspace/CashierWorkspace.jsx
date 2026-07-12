@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Receipt, DollarSign, CheckCircle, Loader, Clock, CreditCard, Banknote, Smartphone, X } from "lucide-react";
+import { DollarSign, CheckCircle, Loader, Clock, CreditCard, Banknote, Smartphone, X } from "lucide-react";
 import { api } from "../../services/api.js";
 
 const PAYMENT_ICONS = { Cash: Banknote, Card: CreditCard, Online: Smartphone };
@@ -13,7 +13,7 @@ function formatTime(iso) {
   return `${hrs}h ${mins % 60}m ago`;
 }
 
-export default function CashierWorkspace({ user, access = {} }) {
+export default function CashierWorkspace({ _user, _access = {} }) {
   const [tab, setTab] = useState("pending");
   const [pendingBills, setPendingBills] = useState([]);
   const [payments, setPayments] = useState([]);

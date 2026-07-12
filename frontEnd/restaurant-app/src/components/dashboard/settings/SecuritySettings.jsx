@@ -13,7 +13,7 @@ const passwordPolicies = [
 
 export default function SecuritySettings({ data, onChange }) {
   const [passwords, setPasswords] = useState({ current: "", new: "", confirm: "" })
-  const [show2FA, setShow2FA] = useState(false)
+  const [_show2FA, _setShow2FA] = useState(false)
   const [passwordError, setPasswordError] = useState("")
   const [passwordSuccess, setPasswordSuccess] = useState("")
   const [changingPassword, setChangingPassword] = useState(false)

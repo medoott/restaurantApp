@@ -35,18 +35,18 @@ export default function OrdersTable({
 
   if (!orders.length) {
     return (
-      <div className="rounded-2xl bg-white ring-1 ring-[#EDE1CF] shadow-sm shadow-[#3B2515]/5 p-8 text-center text-sm text-[#A9805F]">
+      <div className="rounded-[1.5rem] border border-[#EDE1CF] bg-white p-8 text-center text-sm text-[#A9805F] shadow-sm shadow-[#3B2515]/5">
         {loading ? "Loading orders..." : "No orders found."}
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl bg-white ring-1 ring-[#EDE1CF] shadow-sm shadow-[#3B2515]/5 overflow-hidden">
-      <div className="px-5 py-4 border-b border-[#EDE1CF] flex items-center justify-between">
+    <div className="overflow-hidden rounded-[1.5rem] border border-[#EDE1CF] bg-white shadow-sm shadow-[#3B2515]/5">
+      <div className="flex items-center justify-between border-b border-[#EDE1CF] px-5 py-4">
         <h2 className="font-serif text-lg text-[#3B2515]">{title}</h2>
         {showFilters && (
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {["All", ...statusesList.slice(0, 4)].map((f) => (
               <button
                 key={f}
@@ -83,7 +83,7 @@ export default function OrdersTable({
         {orders.map((o) => (
           <div
             key={o.id}
-            className="rounded-3xl bg-white p-4 ring-1 ring-[#EDE1CF] shadow-sm shadow-[#3B2515]/5"
+            className="rounded-[1.25rem] bg-white p-4 ring-1 ring-[#EDE1CF] shadow-sm shadow-[#3B2515]/5"
           >
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between gap-3">
@@ -203,7 +203,7 @@ export default function OrdersTable({
         </table>
       </div>
 
-      <div className="flex items-center justify-between gap-3 border-t border-[#EDE1CF] px-5 py-4 text-sm">
+      <div className="flex flex-col gap-3 border-t border-[#EDE1CF] px-5 py-4 text-sm sm:flex-row sm:items-center sm:justify-between">
         <p className="text-[#9C8268]">
           Page{" "}
           <span className="font-semibold text-[#3B2515]">{page}</span> of{" "}

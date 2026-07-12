@@ -1,10 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Bell, CheckCircle, Package, MapPin,
-  Clock, ArrowRight, AlertTriangle, TrendingUp,
-} from "lucide-react";
-import * as deliveryService from "../../services/delivery.js";
+ce from "../../services/delivery.js";
 import useSocket from "../../hooks/useSocket.js";
 import { useAuth } from "../../hooks/useAuth.js";
 
@@ -38,13 +35,13 @@ export default function WaiterDashboard() {
         loadData();
       }
     },
-    "delivery:accepted": (data) => {
+    "delivery:accepted": (_data) => {
       loadData();
     },
-    "delivery:pickedUp": (data) => {
+    "delivery:pickedUp": (_data) => {
       loadData();
     },
-    "delivery:completed": (data) => {
+    "delivery:completed": (_data) => {
       loadData();
     },
     "task:created": () => loadData(),

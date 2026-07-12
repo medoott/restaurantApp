@@ -14,9 +14,9 @@ export default function ProductsTable({ products, onAddClick, showEdit, loading 
 
   if (loading) {
     return (
-      <div className="rounded-2xl bg-white ring-1 ring-[#EDE1CF] shadow-sm shadow-[#3B2515]/5 overflow-hidden">
-        <div className="px-5 py-4 border-b border-[#EDE1CF]">
-          <div className="h-5 w-32 bg-gray-200 rounded animate-pulse" />
+      <div className="overflow-hidden rounded-[1.5rem] border border-[#EDE1CF] bg-white shadow-sm shadow-[#3B2515]/5">
+        <div className="border-b border-[#EDE1CF] px-5 py-4">
+          <div className="h-5 w-32 animate-pulse rounded bg-gray-200" />
         </div>
         <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-sm">
@@ -51,15 +51,15 @@ export default function ProductsTable({ products, onAddClick, showEdit, loading 
 
   if (!products.length) {
     return (
-      <div className="rounded-2xl bg-white ring-1 ring-[#EDE1CF] shadow-sm shadow-[#3B2515]/5 p-8 text-center text-sm text-[#A9805F]">
+      <div className="rounded-[1.5rem] border border-[#EDE1CF] bg-white p-8 text-center text-sm text-[#A9805F] shadow-sm shadow-[#3B2515]/5">
         No products found.
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl bg-white ring-1 ring-[#EDE1CF] shadow-sm shadow-[#3B2515]/5 overflow-hidden">
-      <div className="px-5 py-4 border-b border-[#EDE1CF] flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className="overflow-hidden rounded-[1.5rem] border border-[#EDE1CF] bg-white shadow-sm shadow-[#3B2515]/5">
+      <div className="flex flex-col gap-3 border-b border-[#EDE1CF] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="font-serif text-lg text-[#3B2515]">All Products</h2>
         {typeof onAddClick === "function" && (
           <button
@@ -75,7 +75,7 @@ export default function ProductsTable({ products, onAddClick, showEdit, loading 
         {products.map((p) => (
           <div
             key={p.id}
-            className="rounded-3xl bg-[#FBF6EF] p-4 ring-1 ring-[#EDE1CF] shadow-sm"
+            className="rounded-[1.25rem] bg-[#FBF6EF] p-4 ring-1 ring-[#EDE1CF] shadow-sm"
           >
             <div className="flex items-center gap-3">
               <img
@@ -93,8 +93,11 @@ export default function ProductsTable({ products, onAddClick, showEdit, loading 
                 </p>
               </div>
             </div>
-              {showEdit && (
-              <button onClick={() => {}} className="mt-4 w-full rounded-full bg-[#3B2515] text-[#F3E5D3] py-2 text-sm hover:bg-[#4A2E18] transition-colors">
+            {showEdit && (
+              <button
+                onClick={() => {}}
+                className="mt-4 w-full rounded-full bg-[#3B2515] px-3 py-2 text-sm font-medium text-[#F3E5D3] transition-colors hover:bg-[#4A2E18]"
+              >
                 Edit
               </button>
             )}
@@ -136,7 +139,10 @@ export default function ProductsTable({ products, onAddClick, showEdit, loading 
                 </td>
                 <td className={paddingClass}>
                   {showEdit ? (
-                    <button onClick={() => {}} className="text-xs font-medium text-[#3B2515] underline decoration-[#D8B68B] underline-offset-2 hover:text-[#7B4B2A]">
+                    <button
+                      onClick={() => {}}
+                      className="text-xs font-medium text-[#3B2515] underline decoration-[#D8B68B] underline-offset-2 transition-colors hover:text-[#7B4B2A]"
+                    >
                       Edit
                     </button>
                   ) : (

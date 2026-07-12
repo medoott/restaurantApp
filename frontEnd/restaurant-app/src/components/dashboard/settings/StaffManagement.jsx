@@ -3,11 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
   Shield, Users, ClipboardList, Lock, Building2, Search, Plus, Trash2, Copy,
   CheckCircle2, XCircle, AlertTriangle, UserCheck, UserX,
-  Key, History, Monitor, Smartphone, Timer, FileText, LogOut,
-  Eye, EyeOff, Mail, Phone, Calendar, Clock, Ban, CheckCircle,
-  Square, CheckSquare, RotateCcw,
-} from "lucide-react"
-import {
+t {
   DEFAULT_ROLES, MOCK_USERS, AUDIT_LOGS, BRANCHES, PERMISSION_GROUPS,
 } from "./rbac/permissionData.js"
 import {
@@ -350,7 +346,7 @@ function UsersTab({ users, roles, setUsers }) {
     if (selectedUserId === userId) setSelectedUserId(null)
   }
 
-  const handleAddExtraPermission = (permKey) => {
+  const _handleAddExtraPermission = (permKey) => {
     if (!selectedUser) return
     const current = selectedUser.extraPermissions || []
     if (current.includes(permKey)) return
@@ -360,7 +356,7 @@ function UsersTab({ users, roles, setUsers }) {
     })
   }
 
-  const handleRemovePermission = (permKey) => {
+  const _handleRemovePermission = (permKey) => {
     if (!selectedUser) return
     const rolePerms = getPermissionKeysForRole(selectedUser.roleId, { staff: { roles } })
     if (rolePerms.includes(permKey)) {
@@ -650,8 +646,8 @@ function UserPermissionEditor({ user, roles, onUpdate }) {
       <div className="max-h-[400px] overflow-y-auto space-y-2 pr-1">
         {filteredGroups.map((group) => {
           const groupEffective = group.permissions.filter((p) => effectivePermissions.includes(p.key))
-          const groupRevoked = group.permissions.filter((p) => revokedPermissions.includes(p.key))
-          const groupExtra = group.permissions.filter((p) => extraPermissions.includes(p.key))
+          const _groupRevoked = group.permissions.filter((p) => revokedPermissions.includes(p.key))
+          const _groupExtra = group.permissions.filter((p) => extraPermissions.includes(p.key))
 
           if (group.permissions.every((p) => !p.key.toLowerCase().includes(searchQuery.toLowerCase()) && !p.label.toLowerCase().includes(searchQuery.toLowerCase()) && !group.label.toLowerCase().includes(searchQuery.toLowerCase()))) {
             if (searchQuery.trim()) return null

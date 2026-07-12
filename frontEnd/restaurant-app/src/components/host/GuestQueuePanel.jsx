@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Clock, Users, Check, X, Bell, ArrowRight, Loader, UserPlus } from "lucide-react";
+import { Clock, Users, Check, X, Bell, ArrowRight, UserPlus }lucide-react";
 import { api } from "../../services/api.js";
 
-export default function GuestQueuePanel({ access = {} }) {
+export default function GuestQueuePanel({ _access = {} }) {
   const [queue, setQueue] = useState({ waiting: [], called: [], seatedToday: [], waitingCount: 0, availableTables: 0, avgEstimatedWaitMinutes: 0 });
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);

@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Users, UserCheck, ClipboardList, ShoppingBag, BarChart3,
   Search, X, RefreshCw, UserPlus, ArrowRight, Loader2,
-  ChevronRight, ChevronLeft, AlertCircle, CheckCircle,
 } from "lucide-react";
 import { fetchAllWaiters, fetchWaiterDetails, fetchAssignedTables, fetchActiveTasks, fetchPendingRequests, fetchDeliveryQueue, fetchWaiterStats, reassignWaiterRequest, fetchWorkloadBalancing, autoAssignWaiter } from "../services/data.js";
 import { CardSkeleton } from "../components/ui/Skeleton.jsx";
@@ -33,7 +31,7 @@ export default function WaiterManagementPage({ permissions = { can: () => false 
   const [reassignLoading, setReassignLoading] = useState(false);
   const [autoAssignOrderId, setAutoAssignOrderId] = useState("");
   const [autoAssignLoading, setAutoAssignLoading] = useState(false);
-  const [searchFocused, setSearchFocused] = useState(false);
+  const [_searchFocused, setSearchFocused] = useState(false);
 
   const showNotif = useCallback((msg, type = "success") => {
     setNotif({ msg, type });
