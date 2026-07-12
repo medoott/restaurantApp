@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
   Shield, Users, ClipboardList, Lock, Building2, Search, Plus, Trash2, Copy,
   CheckCircle2, XCircle, AlertTriangle, UserCheck, UserX,
-t {
+} from "lucide-react"
+import {
   DEFAULT_ROLES, MOCK_USERS, AUDIT_LOGS, BRANCHES, PERMISSION_GROUPS,
 } from "./rbac/permissionData.js"
 import {

@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import {
-les", label: "Roles", icon: Shield },
+import { Shield, Users, History } from "lucide-react";
+
+const TABS = [
+  { key: "roles", label: "Roles", icon: Shield },
   { key: "users", label: "User Permissions", icon: Users },
   { key: "audit", label: "Audit Log", icon: History },
 ];

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { Coffee, Bell, ShoppingBag, CheckCircle, Loader, Clock, Users, Utensils, Droplets, Sparkles, Flame, HelpCircle }services/api.js";
+import { Coffee, Bell, ShoppingBag, CheckCircle, Loader, Clock, Users } from "lucide-react";
+import { api } from "../../services/api.js";
 import { useToast } from "../../hooks/useToast.jsx";
 
 const REQUEST_LABELS = {

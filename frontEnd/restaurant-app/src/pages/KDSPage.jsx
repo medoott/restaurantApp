@@ -40,30 +40,36 @@ export default function KDSPage({ _permissions = { can: () => false } }) {
 
   const loadData = useCallback(async () => {
     try {
-      const [kdsOrders, kdsStats, delayed] = await Promise.all([
+      const [kdsOrders, kdsStats, delayed] = await Promise.allSettled([
         fetchKDSOrders(),
         fetchKDSOrderStats(),
         fetchDelayedOrders(),
       ]);
-      const all = kdsOrders || [];
+
+      const resolvedOrders = kdsOrders.status === "fulfilled" ? kdsOrders.value : [];
+      const resolvedStats = kdsStats.status === "fulfilled" ? kdsStats.value : null;
+      const resolvedDelayed = delayed.status === "fulfilled" ? delayed.value : [];
+
+      const all = Array.isArray(resolvedOrders) ? resolvedOrders : [];
       const pending = all.filter((o) => (o.status || "").toLowerCase() === "pending");
       const preparing = all.filter((o) => (o.status || "").toLowerCase() === "preparing");
       const ready = all.filter((o) => (o.status || "").toLowerCase() === "ready");
+
       setOrders({ pending, preparing, ready });
       setStats({
-        new: kdsStats?.new || 0,
-        preparing: kdsStats?.preparing || 0,
-        ready: kdsStats?.ready || 0,
-        delayed: kdsStats?.delayed || 0,
-        todayCompleted: kdsStats?.todayCompleted || 0,
-        avgPrepTimeMin: kdsStats?.avgPrepTimeMin || 0,
+        new: resolvedStats?.new || resolvedStats?.newOrders || 0,
+        preparing: resolvedStats?.preparing || 0,
+        ready: resolvedStats?.ready || 0,
+        delayed: resolvedStats?.delayed || 0,
+        todayCompleted: resolvedStats?.todayCompleted || 0,
+        avgPrepTimeMin: resolvedStats?.avgPrepTimeMin || 0,
       });
       const delayedOrderIds = new Set(
-        (Array.isArray(delayed) ? delayed : []).map((d) => d.id || d._id)
+        (Array.isArray(resolvedDelayed) ? resolvedDelayed : []).map((d) => d.id || d._id || d.orderId || d.order?.id || d.order?._id)
       );
       setDelayedIds(delayedOrderIds);
     } catch (err) {
-      showNotif(err.message, "error");
+      showNotif(err?.message || "Unable to load KDS data", "error");
     } finally {
       setLoading(false);
     }

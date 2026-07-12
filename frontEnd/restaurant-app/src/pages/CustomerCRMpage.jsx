@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Search, X, Users, Phone, Mail, Star, Clock, DollarSign, MapPin, MessageSquare, Heart, Award, Edit3, Trash2, AlertCircle, CheckCircle, ChevronLeft, ChevronRight, ArrowUpDown, User } from "lucide-react";
-import { fetchAllCustomers, fetchCustomer, fetchCustomerByPhone, createCustomer, updateCustomer, deleteCustomer, addStaffNote, recordVisit, addFavoriteProduct, removeFavoriteProduct, updateLoyaltyPoints, fetchCustomerAnalytics, fetchTopCustomers, fetchCustomerStats }Silver", "Gold", "Platinum", "VIP"];
+import { fetchAllCustomers, fetchCustomer, fetchCustomerByPhone, createCustomer, updateCustomer, deleteCustomer, addStaffNote, recordVisit, addFavoriteProduct, removeFavoriteProduct, updateLoyaltyPoints, fetchCustomerAnalytics, fetchTopCustomers, fetchCustomerStats } from "../services/data.js";
 
 const LOYALTY_BADGE = {
   Bronze: "bg-amber-100 text-amber-700 ring-1 ring-amber-300",

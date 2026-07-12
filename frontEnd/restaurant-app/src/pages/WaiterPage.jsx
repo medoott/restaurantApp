@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Bell, Check, Clock, MapPin, Package, User }lucide-react";
+import { Bell, Check, Clock, MapPin, Package, User } from "lucide-react";
 
 export default function WaiterPage({ apiRequest, _userId }) {
   const [activeTab, setActiveTab] = useState("requests");
