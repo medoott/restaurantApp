@@ -1,7 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Search, X, RefreshCw, UserPlus, ArrowRight, Loader2,
+  Search,
+  X,
+  RefreshCw,
+  UserPlus,
+  ArrowRight,
+  Loader2,
+  UserCheck,
+  BarChart3,
+  ChevronRight,
+  AlertCircle,
+  CheckCircle,
+  ShoppingBag,
+  ClipboardList,
 } from "lucide-react";
 import { fetchAllWaiters, fetchWaiterDetails, fetchAssignedTables, fetchActiveTasks, fetchPendingRequests, fetchDeliveryQueue, fetchWaiterStats, reassignWaiterRequest, fetchWorkloadBalancing, autoAssignWaiter } from "../services/data.js";
 import { CardSkeleton } from "../components/ui/Skeleton.jsx";
