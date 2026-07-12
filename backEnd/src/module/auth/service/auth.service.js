@@ -101,7 +101,7 @@ export const signupService = async (reqData = {}) => {
   }
 
   if (resolvedPassword !== resolvedConfirmationPassword) {
-    throw new AppError("Password mismatch", 409);
+    throw new AppError("Password mismatch", 400);
   }
 
   enforcePasswordPolicy(resolvedPassword);

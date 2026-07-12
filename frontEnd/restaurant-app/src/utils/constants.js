@@ -18,7 +18,9 @@ export const PAYMENT_STATUS_STYLES = {
 export const TAX_RATE = 0.08;
 
 const fallbackApiBase = typeof window !== "undefined"
-  ? `${window.location.protocol}//${window.location.hostname}:3000`
+  ? ((window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === "0.0.0.0")
+    ? `${window.location.protocol}//${window.location.hostname}:3000`
+    : window.location.origin)
   : "http://localhost:3000";
 
 export const API_BASE =
