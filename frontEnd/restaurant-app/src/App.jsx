@@ -11,8 +11,9 @@ import useRequestLock from "./hooks/useRequestLock.js";
 import useSocket from "./hooks/useSocket.js";
 import usePermissions from "./hooks/usePermissions.js";
 import { normalizeOrder } from "./utils/normalize.js";
+import { getSafePage } from "./utils/permissions.js";
 import { SettingsProvider } from "./context/SettingsContext.jsx";
-import { SecurityProvider, useSecurity } from "./context/SecurityContext.jsx";
+import { SecurityProvider } from "./context/SecurityContext.jsx";
 import { useSettings } from "./context/useSettings.js";
 import { playNotificationSound } from "./utils/audio.js";
 import AppNav from "./components/ui/AppNav.jsx";
@@ -97,7 +98,14 @@ function AppCore({ auth }) {
     if (!validPages.includes(page) && page !== "scan" && page !== "menu" && page !== "track") {
       setPage(validPages[0]);
     }
-  }, [allowedPages]);
+  }, [allowedPages, page]);
+
+  useEffect(() => {
+    const nextPage = getSafePage(perm.permissions, page, allowedPages);
+    if (nextPage !== page) {
+      setPage(nextPage);
+    }
+  }, [allowedPages, page, perm.permissions]);
 
   useEffect(() => {
     if (roleWorkspace && page !== roleWorkspace && page === "dashboard") {
@@ -317,6 +325,8 @@ function AppCore({ auth }) {
     }
   }, [handleTableVerified, perm]);
 
+  const cartCount = useMemo(() => cart.reduce((s, i) => s + i.qty, 0), [cart]);
+
   const cartProps = useMemo(
     () => ({
       cart, removeFromCart, payment, setPayment,
@@ -325,9 +335,9 @@ function AppCore({ auth }) {
       onClearError: () => setOrderError(""),
       user: auth.user,
       onOpenLogin: () => { auth.setAuthError(""); auth.setAuthMode("login"); auth.setAuthOpen(true); },
-      cartCount: cart.reduce((s, i) => s + i.qty, 0),
+      cartCount,
     }),
-    [cart, removeFromCart, payment, setPayment, editingOrder, confirmOrder, orderError, auth.user?.name, auth.user?._id],
+    [cart, removeFromCart, payment, setPayment, editingOrder, confirmOrder, orderError, auth, cartCount],
   );
 
   // Hidden developer console takes priority over everything
@@ -485,8 +495,8 @@ function AppCore({ auth }) {
                 >
                   <ShoppingBag size={16} />
                   {editingOrder
-                    ? `Update Order - ${cartProps.cartCount} items`
-                    : `View Cart - ${cartProps.cartCount} items`}
+                    ? `Update Order - ${cartCount} items`
+                    : `View Cart - ${cartCount} items`}
                 </button>
               )}
             </>

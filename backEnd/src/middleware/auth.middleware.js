@@ -4,7 +4,8 @@ import userModel from "../DB/model/User.model.js";
 import TokenBlacklist from "../DB/model/TokenBlacklist.model.js";
 import { asyncHandler } from "../util/error/error.js";
 import { AppError } from "../util/error/AppError.js";
-import { extractBearerToken, resolveTokenSecret } from "../util/security/token.js";
+import { logger } from "../util/logger.js";
+import { extractBearerToken, resolveTokenSecret, parseAuthorizationHeader } from "../util/security/token.js";
 
 export const userRoles = {
   user: "User",
@@ -18,16 +19,28 @@ export const userRoles = {
   cleaner: "Cleaner",
 };
 
-export const authentication = () => {
+export const authentication = (options = {}) => {
+  const required = options.required !== false;
   return asyncHandler(async (req, res, next) => {
     const { authorization } = req.headers;
     const token = extractBearerToken(authorization);
 
     if (!token) {
+      if (!required) {
+        return next();
+      }
       return next(new AppError("Authorization token is required", 401));
     }
 
-    const [scheme] = String(authorization || "").trim().split(/\s+/);
+    const { scheme, token: bearerToken } = parseAuthorizationHeader(authorization);
+    const authToken = token || bearerToken;
+    if (!authToken) {
+      if (!required) {
+        return next();
+      }
+      return next(new AppError("Authorization token is required", 401));
+    }
+
     let signature;
     switch (scheme) {
       case "Admin":
@@ -37,10 +50,19 @@ export const authentication = () => {
         signature = process.env.TOKEN_SIGNATURE;
     }
 
+    if (!signature) {
+      logger.error("Missing token signature for auth middleware", { scheme, requestId: req.requestId });
+      return next(new AppError("Authentication misconfiguration", 500));
+    }
+
     let decoded;
     try {
-      decoded = jwt.verify(token, resolveTokenSecret(signature), { algorithms: ['HS256'] });
-    } catch {
+      decoded = jwt.verify(authToken, resolveTokenSecret(signature), { algorithms: ["HS256"] });
+    } catch (error) {
+      if (!required) {
+        return next();
+      }
+      logger.warn("JWT verification failed", { error: error.message, requestId: req.requestId });
       return next(new AppError("Invalid or expired token", 401));
     }
 

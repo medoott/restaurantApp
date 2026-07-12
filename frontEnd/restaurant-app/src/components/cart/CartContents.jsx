@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { ShoppingBag, Trash2, Banknote, CreditCard, X } from "lucide-react";
 import { useSettings } from "../../context/useSettings.js";
 import PrimaryButton from "../ui/PrimaryButton.jsx";
@@ -27,10 +27,17 @@ export default function CartContents({
   const taxPercent = parseFloat(generalSettings.taxPercentage ?? 8);
   const servicePercent = parseFloat(generalSettings.serviceCharge ?? 0);
 
-  const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const tax = subtotal * (taxPercent / 100);
-  const serviceCharge = subtotal * (servicePercent / 100);
-  const total = subtotal + tax + serviceCharge;
+  const { subtotal, tax, serviceCharge, total } = useMemo(() => {
+    const computedSubtotal = cart.reduce((s, i) => s + Number(i.price || 0) * Number(i.qty || 0), 0);
+    const computedTax = computedSubtotal * (taxPercent / 100);
+    const computedServiceCharge = computedSubtotal * (servicePercent / 100);
+    return {
+      subtotal: computedSubtotal,
+      tax: computedTax,
+      serviceCharge: computedServiceCharge,
+      total: computedSubtotal + computedTax + computedServiceCharge,
+    };
+  }, [cart, servicePercent, taxPercent]);
 
   // Ordering constraints
   const minAmount = parseFloat(orderingSettings.minOrderAmount || 0);
@@ -148,6 +155,7 @@ export default function CartContents({
                 onClick={() => removeFromCart(item.id)}
                 className="mt-1 text-[#C9572F] hover:text-[#a8441f] transition-colors"
                 aria-label={`Remove ${item.name} from cart`}
+                type="button"
               >
                 <Trash2 size={14} />
               </button>

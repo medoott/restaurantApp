@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import userModel from "../DB/model/User.model.js";
 import TableSession from "../DB/model/TableSession.model.js";
-import { extractBearerToken, resolveTokenSecret } from "../util/security/token.js";
+import { parseAuthorizationHeader, extractBearerToken, resolveTokenSecret } from "../util/security/token.js";
 
 export async function optionalAuth(req, res, next) {
   const { authorization } = req.headers;
@@ -9,7 +9,7 @@ export async function optionalAuth(req, res, next) {
 
   if (token) {
     try {
-      const [scheme] = String(authorization || "").trim().split(/\s+/);
+      const { scheme } = parseAuthorizationHeader(authorization);
       let signature;
       switch (scheme) {
         case "Admin":
@@ -23,7 +23,7 @@ export async function optionalAuth(req, res, next) {
       try {
         decoded = jwt.verify(token, resolveTokenSecret(signature), { algorithms: ["HS256"] });
       } catch {
-        // Token invalid or expired — proceed as unauthenticated
+        decoded = null;
       }
 
       if (decoded?.id) {

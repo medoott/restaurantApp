@@ -2,6 +2,18 @@ import jwt from "jsonwebtoken";
 
 const DEFAULT_SIGNATURE = process.env.TOKEN_SIGNATURE;
 
+export const parseAuthorizationHeader = (authorization = "") => {
+  const value = String(authorization || "").trim();
+  if (!value) return { scheme: null, token: "" };
+
+  const match = value.match(/^([A-Za-z]+)\s+(.+)$/);
+  if (!match) {
+    return { scheme: null, token: value };
+  }
+
+  return { scheme: match[1], token: match[2] };
+};
+
 export const resolveTokenSecret = (signature) => {
   const secret = signature || DEFAULT_SIGNATURE;
   if (!secret) {
@@ -21,7 +33,7 @@ export const generateToken = ({
     ...options,
     ...(expiresIn !== undefined ? { expiresIn } : {}),
   };
-  return jwt.sign(payload, secret, { ...signOptions, algorithm: 'HS256' });
+  return jwt.sign(payload, secret, { ...signOptions, algorithm: "HS256" });
 };
 
 export const verifyToken = ({
@@ -29,15 +41,10 @@ export const verifyToken = ({
   signature = DEFAULT_SIGNATURE,
 } = {}) => {
   const secret = resolveTokenSecret(signature);
-  return jwt.verify(token, secret, { algorithms: ['HS256'] });
+  return jwt.verify(token, secret, { algorithms: ["HS256"] });
 };
 
 export const extractBearerToken = (authorization = "") => {
-  const value = String(authorization || "").trim();
-  if (!value) return "";
-
-  const match = value.match(/^(Bearer|Admin)\s+(.+)$/);
-  if (match) return match[2];
-
-  return "";
+  const { token } = parseAuthorizationHeader(authorization);
+  return token;
 };

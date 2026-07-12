@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useMemo } from "react";
 import { useSettings } from "../context/useSettings.js";
 import { TAX_RATE } from "../utils/constants.js";
 
@@ -77,11 +77,11 @@ export default function useCart() {
     savePayment(method);
   }, []);
 
-  const cartItemCount = cart.reduce((s, i) => s + i.qty, 0);
+  const cartItemCount = useMemo(() => cart.reduce((s, i) => s + i.qty, 0), [cart]);
 
   const buildOrderPayload = useCallback(() => {
     const s = settingsRef.current;
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    const subtotal = cart.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 0), 0);
     const taxPercent = parseFloat(s?.general?.taxPercentage ?? (TAX_RATE * 100));
     const tax = subtotal * (taxPercent / 100);
     const servicePercent = parseFloat(s?.general?.serviceCharge ?? 0);
@@ -97,10 +97,10 @@ export default function useCart() {
     return { subtotal, tax, serviceCharge, total, itemsDetail };
   }, [cart]);
 
-  return {
+  return useMemo(() => ({
     cart, setCart: setCartWithPersist, cartOpen, setCartOpen,
     payment, setPayment: setPaymentWithPersist,
     editingOrder, setEditingOrder, addToCart, removeFromCart,
     clearCart, cartItemCount, buildOrderPayload,
-  };
+  }), [cart, cartOpen, payment, editingOrder, setCartWithPersist, setCartOpen, setPaymentWithPersist, setEditingOrder, addToCart, removeFromCart, clearCart, cartItemCount, buildOrderPayload]);
 }

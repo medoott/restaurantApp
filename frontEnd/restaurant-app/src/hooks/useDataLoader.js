@@ -26,24 +26,25 @@ export default function useDataLoader() {
       setProducts(p);
 
       if (token) {
-        try {
-          const [o, s] = await Promise.all([
-            dataService.fetchAllOrders(),
-            dataService.fetchAllShortages(),
-          ]);
-          if (!mountedRef.current) return;
-          setOrders(o);
-          setShortages(s);
-        } catch {}
+        const [o, s] = await Promise.all([
+          dataService.fetchAllOrders(),
+          dataService.fetchAllShortages(),
+        ]);
+        if (!mountedRef.current) return;
+        setOrders(o);
+        setShortages(s);
+      } else {
+        setOrders([]);
+        setShortages([]);
       }
     } catch (err) {
       if (!mountedRef.current) return;
-      if (err.status === 401) {
+      if (err?.status === 401) {
         setProducts([]);
         setOrders([]);
         setShortages([]);
       } else {
-        setError(err.message || "Failed to load data");
+        setError(err?.message || "Failed to load data");
       }
     } finally {
       if (mountedRef.current) setLoading(false);

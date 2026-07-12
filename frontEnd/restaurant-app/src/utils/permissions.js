@@ -100,6 +100,50 @@ export const TOP_PAGES = [
   { key: "rbac", label: "RBAC", icon: "Shield", permission: "roles.view" },
 ];
 
+export const PROTECTED_PAGE_PERMISSIONS = Object.freeze({
+  dashboard: "dashboard.view",
+  cook: "kitchen.view",
+  tables: "tables.view",
+  "tables-dashboard": "tables.view",
+  host: "host.view",
+  cleaning: "cleaning.view",
+  waiter: "waiter.view",
+  "waiter-workspace": "waiter.view",
+  "cashier-workspace": "payments.view",
+  "host-workspace": "host.view",
+  "kitchen-workspace": "kitchen.view",
+  rbac: "roles.view",
+});
+
+export function getPagePermission(page) {
+  return PROTECTED_PAGE_PERMISSIONS[page] ?? null;
+}
+
+export function canAccessPage(effectivePermissions, page) {
+  const requiredPermission = getPagePermission(page);
+  if (!requiredPermission) return true;
+  return hasPermission(effectivePermissions, requiredPermission);
+}
+
+export function getSafePage(effectivePermissions, requestedPage, allowedPages = []) {
+  if (canAccessPage(effectivePermissions, requestedPage)) return requestedPage;
+
+  const prioritizedCandidates = [
+    ...allowedPages.filter((candidate) => candidate !== requestedPage && candidate !== "scan"),
+    "dashboard",
+    "home",
+    "menu",
+    "track",
+  ];
+
+  const safeCandidate = prioritizedCandidates.find((candidate) => {
+    if (!candidate || candidate === requestedPage) return false;
+    return canAccessPage(effectivePermissions, candidate);
+  });
+
+  return safeCandidate || "home";
+}
+
 export function getTopPages(effectivePermissions) {
   return TOP_PAGES.filter((page) => {
     if (!page.permission) return true;

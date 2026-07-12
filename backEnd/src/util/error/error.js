@@ -1,4 +1,5 @@
 import { AppError } from "./AppError.js";
+import { logger } from "../logger.js";
 
 /**
  * Wraps an async route handler so thrown errors are forwarded to Express error middleware.
@@ -68,9 +69,9 @@ export const globalErrorHandling = (error, req, res, _next) => {
   };
 
   if (statusCode >= 500) {
-    console.error(JSON.stringify(logEntry));
+    logger.error(logEntry.message || "Unhandled server error", logEntry);
   } else if (statusCode >= 400) {
-    console.warn(JSON.stringify(logEntry));
+    logger.warn(logEntry.message || "Client error", logEntry);
   }
 
   res.setHeader("X-Request-Id", req?.requestId || "");

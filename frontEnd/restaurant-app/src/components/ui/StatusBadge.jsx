@@ -35,6 +35,7 @@ export default function StatusBadge({ status }) {
     <span
       style={hasCustomStyle ? badgeStyle : {}}
       className={hasCustomStyle ? "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold" : `inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${style}`}
+      title={resolvedStatus}
     >
       {resolvedStatus}
     </span>

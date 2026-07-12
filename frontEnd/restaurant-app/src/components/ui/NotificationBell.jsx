@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Bell, BellRing, CheckCheck, AlertCircle, Clock, User, AlertTriangle } from "lucide-react";
-import { getApiToken } from "../../services/api.js";
-import { API_BASE } from "../../utils/constants.js";
+import { apiRequest } from "../../services/api.js";
 
 const PRIORITY_STYLES = {
   critical: "border-l-rose-500 bg-rose-50",
@@ -35,26 +34,22 @@ export default function NotificationBell({ socket }) {
   const [unreadCount, setUnreadCount] = useState(0);
   const panelRef = useRef(null);
 
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const token = getApiToken();
-        if (!token) return;
-        const res = await fetch(`${API_BASE}/notifications?limit=20`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (res.ok) {
-          const data = await res.json();
-          const items = data?.data?.items || [];
-          setNotifications(items);
-          setUnreadCount(data?.data?.unread || items.filter((n) => !n.read).length);
-        }
-      } catch {}
-    };
-    fetchNotifications();
-    const interval = setInterval(fetchNotifications, 30000);
-    return () => clearInterval(interval);
+  const fetchNotifications = useCallback(async () => {
+    try {
+      const data = await apiRequest("/notifications?limit=20");
+      const items = data?.data?.items || [];
+      setNotifications(items);
+      setUnreadCount(data?.data?.unread || items.filter((n) => !n.read).length);
+    } catch {
+      setNotifications((prev) => prev);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchNotifications();
+    const interval = window.setInterval(fetchNotifications, 30000);
+    return () => window.clearInterval(interval);
+  }, [fetchNotifications]);
 
   useEffect(() => {
     if (!socket) return;
@@ -74,39 +69,31 @@ export default function NotificationBell({ socket }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
-  const handleAcknowledge = async (id) => {
+  const handleAcknowledge = useCallback(async (id) => {
     try {
-      const token = getApiToken();
-      await fetch(`${API_BASE}/notifications/${id}/acknowledge`, {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await apiRequest(`/notifications/${id}/acknowledge`, { method: "PUT" });
       setNotifications((prev) =>
         prev.map((n) => (n._id === id ? { ...n, read: true } : n))
       );
       setUnreadCount((c) => Math.max(0, c - 1));
     } catch {}
-  };
+  }, []);
 
-  const handleAcknowledgeAll = async () => {
+  const handleAcknowledgeAll = useCallback(async () => {
     try {
-      const token = getApiToken();
-      await fetch(`${API_BASE}/notifications/acknowledge-all`, {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await apiRequest("/notifications/acknowledge-all", { method: "PUT" });
       setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
       setUnreadCount(0);
     } catch {}
-  };
+  }, []);
 
-  const timeAgo = (date) => {
+  const timeAgo = useCallback((date) => {
     const diff = Date.now() - new Date(date).getTime();
     if (diff < 60000) return "now";
     if (diff < 3600000) return `${Math.floor(diff / 60000)}m`;
     if (diff < 86400000) return `${Math.floor(diff / 3600000)}h`;
     return `${Math.floor(diff / 86400000)}d`;
-  };
+  }, []);
 
   return (
     <div className="relative" ref={panelRef}>
@@ -130,7 +117,7 @@ export default function NotificationBell({ socket }) {
         <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white rounded-xl shadow-xl border border-[#EDE1CF] overflow-hidden z-[60]">
           <div className="flex items-center justify-between px-4 py-3 border-b border-[#EDE1CF] bg-[#FBF6EF]">
             <span className="text-sm font-semibold text-[#3B2515]">
-              Notifications {unreadCount > 0 && `(${unreadCount})`}
+              Notifications {unreadCount > 0 ? `(${unreadCount})` : ""}
             </span>
             {unreadCount > 0 && (
               <button type="button" onClick={handleAcknowledgeAll} className="flex items-center gap-1 text-xs text-[#B07B4F] hover:text-[#9A6B42] font-medium">
@@ -159,7 +146,7 @@ export default function NotificationBell({ socket }) {
                         n.priority === "medium" ? "text-amber-500" : "text-stone-400"
                       }`} />
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs font-medium text-[#3B2515] truncate">
+                        <p className="text-xs font-medium text-[#3B2515] truncate" title={n.title}>
                           {n.title}
                         </p>
                         {n.message && (

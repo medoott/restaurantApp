@@ -6,21 +6,30 @@ export function validateEnv() {
     "CRYPT_SIGNATURE",
     "EMAIL_TOKEN_SIGNATURE",
     "FRONT_END_URL",
-    "CORS_ORIGIN"
+    "CORS_ORIGIN",
   ];
-  
+
   const missing = [];
   for (const key of required) {
     if (!process.env[key] || process.env[key].trim() === "") {
       missing.push(key);
     }
   }
-  
+
+  const productionRequired = ["TOKEN_SIGNATURE_DEVELOPER", "TABLE_SESSION_SECRET"];
+  if (process.env.NODE_ENV === "production") {
+    for (const key of productionRequired) {
+      if (!process.env[key] || process.env[key].trim() === "") {
+        missing.push(key);
+      }
+    }
+  }
+
   if (missing.length > 0) {
     console.error("=====================================================================");
     console.error("CRITICAL CONFIGURATION ERROR: Missing required environment variables:");
     console.error("---------------------------------------------------------------------");
-    missing.forEach(v => console.error(`  - ${v}`));
+    missing.forEach((v) => console.error(`  - ${v}`));
     console.error("=====================================================================");
     process.exit(1);
   }
@@ -35,7 +44,8 @@ export function validateEnv() {
   if (process.env.NODE_ENV === "production") {
     const minSecretLen = 32;
     let hasWeakSecret = false;
-    for (const key of secrets) {
+
+    for (const key of [...secrets, ...productionRequired]) {
       const val = process.env[key] || "";
       if (val.length < minSecretLen) {
         console.error(`CRITICAL: ${key} is too short for production (${val.length}/${minSecretLen} chars).`);
@@ -50,6 +60,7 @@ export function validateEnv() {
         hasWeakSecret = true;
       }
     }
+
     if (hasWeakSecret) {
       console.error("=====================================================================");
       console.error("Server cannot start with weak secrets in production.");
