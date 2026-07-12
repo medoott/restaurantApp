@@ -17,8 +17,12 @@ export const PAYMENT_STATUS_STYLES = {
 
 export const TAX_RATE = 0.08;
 
+const fallbackApiBase = typeof window !== "undefined"
+  ? `${window.location.protocol}//${window.location.hostname}:3000`
+  : "http://localhost:3000";
+
 export const API_BASE =
-  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") || "http://localhost:3000";
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") || fallbackApiBase;
 
 export const ORDER_STATUSES = [
   "Pending",
