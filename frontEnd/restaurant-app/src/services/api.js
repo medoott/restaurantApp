@@ -35,6 +35,10 @@ export async function apiRequest(path, options = {}) {
 
   const maxRetries = Math.max(0, Number(options.retries ?? 1));
   const timeoutMs = Number(options.timeoutMs ?? options.timeout ?? 15000);
+  const isOfflineError = (message = "") => {
+    const normalized = String(message || "").toLowerCase();
+    return normalized.includes("fetch") || normalized.includes("network") || normalized.includes("load failed") || normalized.includes("request failed") || normalized.includes("aborted");
+  };
 
   for (let attempt = 0; attempt <= maxRetries; attempt += 1) {
     const controller = new AbortController();
@@ -82,16 +86,16 @@ export async function apiRequest(path, options = {}) {
         throw err;
       }
 
-      const normalizedMessage = err?.message === "Failed to fetch" || err?.message === "NetworkError when attempting to fetch resource"
-        ? "The server is temporarily unavailable. Please try again."
-        : err?.message || "Network error";
+      const normalizedMessage = isOfflineError(err?.message)
+        ? "We couldn’t reach the server. Please try again."
+        : err?.message || "We couldn’t complete that request. Please try again.";
 
-      if ((err?.name === "AbortError" || err?.message === "Failed to fetch") && attempt < maxRetries) {
+      if ((err?.name === "AbortError" || isOfflineError(err?.message)) && attempt < maxRetries) {
         continue;
       }
 
       if (err?.name === "AbortError") {
-        throw new ApiError("Request timed out. Please try again.", 0, null);
+        throw new ApiError("The request timed out. Please try again.", 0, null);
       }
 
       throw new ApiError(normalizedMessage, 0, null);

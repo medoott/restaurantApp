@@ -58,10 +58,13 @@ export default function TrackOrderPage({ onBackHome, initialOrderId = "", onAddI
       }
       return normalizeOrder(found);
     } catch (err) {
+      const message = err?.message || "We couldn’t load your order status right now.";
       setError(
-        err.message === "Request failed: 404"
+        err?.status === 404 || message === "Request failed: 404"
           ? "Order not found. Please check the order ID."
-          : err.message || "Failed to fetch order status.",
+          : message === "We couldn’t reach the server. Please try again."
+            ? message
+            : message || "We couldn’t load your order status right now.",
       );
       return null;
     } finally {
