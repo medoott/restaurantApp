@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-ce from "../../services/delivery.js";
+import { Clock, Package, MapPin, AlertTriangle, CheckCircle } from "lucide-react";
+import * as deliveryService from "../../services/delivery.js";
+import { api } from "../../services/api.js";
 import useSocket from "../../hooks/useSocket.js";
 import { useAuth } from "../../hooks/useAuth.js";
 
@@ -18,11 +19,14 @@ export default function WaiterDashboard() {
     try {
       const [delData, taskData] = await Promise.all([
         deliveryService.getMyDeliveries({ limit: "50" }).catch(() => ({ deliveries: [] })),
-        fetch("/api/tasks/mine").then(r => r.json()).catch(() => ({ tasks: [] })),
+        api.get("/tasks/mine").catch(() => ({ tasks: [] })),
       ]);
       setDeliveries(delData?.deliveries || []);
       setTasks(taskData?.tasks || []);
-    } catch { } finally {
+    } catch {
+      setDeliveries([]);
+      setTasks([]);
+    } finally {
       setLoading(false);
     }
   }, []);

@@ -12,8 +12,7 @@ import {
   Settings2,
   ChevronDown,
 } from "lucide-react";
-import { API_BASE } from "../../../utils/constants.js";
-import { getApiToken } from "../../../services/api.js";
+import { api } from "../../../services/api.js";
 import {
   FilterBar,
   ExportBar,
@@ -78,16 +77,10 @@ export default function AnalyticsDashboard() {
     setLoading(true);
     setError(null);
     try {
-      const token = getApiToken();
-      const res = await fetch(`${API_BASE}/analytics/metrics?period=${p}`, {
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
-      });
-      if (res.status === 401) throw new Error("Authentication required. Please log in.");
-      if (!res.ok) throw new Error(`Failed to fetch analytics: ${res.status}`);
-      const result = await res.json();
+      const result = await api.get(`/analytics/metrics?period=${p}`);
       setData(result);
     } catch (err) {
-      setError(err.message);
+      setError(err?.message || "Unable to load analytics right now.");
       setData(null);
     } finally {
       setLoading(false);

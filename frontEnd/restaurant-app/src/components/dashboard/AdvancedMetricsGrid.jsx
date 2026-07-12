@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import MetricBox from "../ui/MetricBox.jsx";
-import { API_BASE } from "../../utils/constants.js";
+import { api } from "../../services/api.js";
 
 export default function AdvancedMetricsGrid({
   role,
@@ -17,12 +17,10 @@ export default function AdvancedMetricsGrid({
 
     const fetchMetrics = async () => {
       try {
-        const res = await fetch(`${API_BASE}/analytics/metrics`);
-        if (!res.ok) throw new Error("Failed to fetch metrics");
-        const data = await res.json();
-        if (alive) setMetrics(data.metrics);
+        const data = await api.get("/analytics/metrics");
+        if (alive) setMetrics(data?.metrics ?? data?.data?.metrics ?? null);
       } catch (err) {
-        console.error("Metrics fetch error:", err);
+        console.error("Metrics fetch error:", err?.message || "Unable to load metrics.");
       } finally {
         if (alive) setLoading(false);
       }

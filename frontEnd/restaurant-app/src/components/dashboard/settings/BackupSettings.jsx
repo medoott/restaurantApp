@@ -3,7 +3,7 @@ import {
   Download, Upload, Calendar, CalendarDays, CalendarRange, RefreshCw, FileArchive,
 } from "lucide-react"
 
-import { API_BASE } from "../../../utils/constants.js"
+import { api, getApiToken } from "../../../services/api.js"
 
 export default function BackupSettings({ data, onChange }) {
   const [backingUp, setBackingUp] = useState(false)
@@ -16,15 +16,13 @@ export default function BackupSettings({ data, onChange }) {
   const handleCreateBackup = async () => {
     setBackingUp(true)
     try {
-      const token = localStorage.getItem("coffe_token")
-      const response = await fetch(`${API_BASE}/settings/backup`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const token = getApiToken()
+      const backupJson = await api.get("/settings/backup", {
+        authToken: token,
+        retries: 0,
+        timeoutMs: 20000,
       })
-      if (!response.ok) throw new Error("Failed to generate backup file on server")
-      const backupJson = await response.json()
-      
+
       const blob = new Blob([JSON.stringify(backupJson, null, 2)], { type: "application/json" })
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement("a")
@@ -55,19 +53,12 @@ export default function BackupSettings({ data, onChange }) {
       reader.onload = async (event) => {
         try {
           const backupData = JSON.parse(event.target.result)
-          const token = localStorage.getItem("coffe_token")
-          const response = await fetch(`${API_BASE}/settings/restore`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(backupData),
+          const token = getApiToken()
+          await api.post("/settings/restore", backupData, {
+            authToken: token,
+            retries: 0,
+            timeoutMs: 30000,
           })
-          if (!response.ok) {
-            const errBody = await response.json().catch(() => ({}))
-            throw new Error(errBody.message || "Failed to restore backup")
-          }
           alert("Backup restored successfully! The page will now reload.")
           window.location.reload()
         } catch (err) {

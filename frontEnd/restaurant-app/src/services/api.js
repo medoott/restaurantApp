@@ -82,15 +82,19 @@ export async function apiRequest(path, options = {}) {
         throw err;
       }
 
+      const normalizedMessage = err?.message === "Failed to fetch" || err?.message === "NetworkError when attempting to fetch resource"
+        ? "The server is temporarily unavailable. Please try again."
+        : err?.message || "Network error";
+
       if ((err?.name === "AbortError" || err?.message === "Failed to fetch") && attempt < maxRetries) {
         continue;
       }
 
       if (err?.name === "AbortError") {
-        throw new ApiError("Request timed out", 0, null);
+        throw new ApiError("Request timed out. Please try again.", 0, null);
       }
 
-      throw new ApiError(err?.message || "Network error", 0, null);
+      throw new ApiError(normalizedMessage, 0, null);
     } finally {
       clearTimeout(timeout);
     }
