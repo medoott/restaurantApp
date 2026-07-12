@@ -46,11 +46,27 @@ export const normalizeInventoryItem = (item) => ({
 });
 
 export const unwrapList = (data, key) => {
+  const candidateSources = [];
+
   if (Array.isArray(data)) return data;
-  if (Array.isArray(data?.items)) return data.items;
-  if (Array.isArray(data?.data?.items)) return data.data.items;
-  if (Array.isArray(data?.[key])) return data[key];
-  if (Array.isArray(data?.data?.[key])) return data.data[key];
+
+  if (data && typeof data === "object") {
+    candidateSources.push(data.items, data[key], data?.data?.items, data?.data?.[key], data?.data);
+  }
+
+  for (const candidate of candidateSources) {
+    if (Array.isArray(candidate)) return candidate;
+  }
+
+  if (data && typeof data === "object") {
+    const nestedValues = Object.values(data)
+      .filter((value) => value && typeof value === "object")
+      .map((value) => unwrapList(value, key));
+
+    const nestedArray = nestedValues.find((value) => Array.isArray(value) && value.length > 0);
+    if (nestedArray) return nestedArray;
+  }
+
   return [];
 };
 

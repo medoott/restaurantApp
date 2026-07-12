@@ -9,6 +9,7 @@ import {
   completeKDSOrder, fetchDelayedOrders
 } from "../services/data.js";
 import { KDSOrderSkeleton } from "../components/ui/Skeleton.jsx";
+import { unwrapList } from "../utils/normalize.js";
 
 export default function KDSPage({ _permissions = { can: () => false } }) {
   const [orders, setOrders] = useState({ pending: [], preparing: [], ready: [] });
@@ -50,7 +51,7 @@ export default function KDSPage({ _permissions = { can: () => false } }) {
       const resolvedStats = kdsStats.status === "fulfilled" ? kdsStats.value : null;
       const resolvedDelayed = delayed.status === "fulfilled" ? delayed.value : [];
 
-      const all = Array.isArray(resolvedOrders) ? resolvedOrders : [];
+      const all = unwrapList(resolvedOrders, "orders");
       const pending = all.filter((o) => (o.status || "").toLowerCase() === "pending");
       const preparing = all.filter((o) => (o.status || "").toLowerCase() === "preparing");
       const ready = all.filter((o) => (o.status || "").toLowerCase() === "ready");

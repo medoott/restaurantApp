@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Clock, Users, Check, X, Bell, ArrowRight, UserPlus }lucide-react";
+import { Clock, Users, Check, X, Bell, ArrowRight, UserPlus } from "lucide-react";
 import { api } from "../../services/api.js";
 
 export default function GuestQueuePanel({ _access = {} }) {

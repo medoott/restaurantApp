@@ -59,9 +59,18 @@ export default function WaiterWorkspace({ user, _access = {} }) {
         api.get("/waiter/requests?status=pending").catch(() => ({ data: { items: [] } })),
         api.get("/delivery/mine").catch(() => ({ data: [] })),
       ]);
-      setTables(tablesRes?.data?.items || tablesRes?.data || tablesRes?.items || []);
-      setRequests(requestsRes?.data?.items || requestsRes?.items || []);
-      setDeliveries(deliveriesRes?.data?.items || deliveriesRes?.data || deliveriesRes?.items || deliveriesRes || []);
+
+      const normalizeList = (value) => {
+        if (Array.isArray(value)) return value;
+        if (Array.isArray(value?.items)) return value.items;
+        if (Array.isArray(value?.data)) return value.data;
+        if (Array.isArray(value?.data?.items)) return value.data.items;
+        return [];
+      };
+
+      setTables(normalizeList(tablesRes?.data || tablesRes));
+      setRequests(normalizeList(requestsRes?.data || requestsRes));
+      setDeliveries(normalizeList(deliveriesRes?.data || deliveriesRes));
     } catch {
     } finally {
       setLoading(false);
@@ -80,7 +89,14 @@ export default function WaiterWorkspace({ user, _access = {} }) {
     setLoadingOrders((prev) => ({ ...prev, [tableId]: true }));
     try {
       const res = await api.get(`/tables/${tableId}/orders`).catch(() => []);
-      const orders = Array.isArray(res) ? res : res?.data?.items || res?.items || res?.data || [];
+      const normalizeList = (value) => {
+        if (Array.isArray(value)) return value;
+        if (Array.isArray(value?.items)) return value.items;
+        if (Array.isArray(value?.data)) return value.data;
+        if (Array.isArray(value?.data?.items)) return value.data.items;
+        return [];
+      };
+      const orders = normalizeList(res?.data || res);
       setTableOrders((prev) => ({ ...prev, [tableId]: orders }));
     } catch {
     } finally {

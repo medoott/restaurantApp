@@ -5,6 +5,7 @@ import {
   Users, Utensils, ChefHat, RefreshCw
 } from "lucide-react";
 import { api } from "../../services/api.js";
+import { unwrapList } from "../../utils/normalize.js";
 
 const calcElapsed = (createdAt) => {
   if (!createdAt) return 0;
@@ -31,11 +32,12 @@ export default function KitchenWorkspace({ user, _access = {} }) {
   const loadData = useCallback(async () => {
     try {
       const [kdsOrders, kdsStats, delayed] = await Promise.all([
-        api.get("/kds/orders"),
-        api.get("/kds/stats"),
-        api.get("/kds/delayed"),
+        api.get("/kds/orders").catch(() => []),
+        api.get("/kds/stats").catch(() => ({})),
+        api.get("/kds/delayed").catch(() => []),
       ]);
-      const all = kdsOrders?.data || kdsOrders || [];
+
+      const all = unwrapList(kdsOrders?.data || kdsOrders || {}, "orders");
       const pending = all.filter((o) => (o.status || "").toLowerCase() === "pending");
       const preparing = all.filter((o) => (o.status || "").toLowerCase() === "preparing");
       const ready = all.filter((o) => (o.status || "").toLowerCase() === "ready");
@@ -46,10 +48,10 @@ export default function KitchenWorkspace({ user, _access = {} }) {
         ready: s.ready || 0, delayed: s.delayed || 0,
         todayCompleted: s.todayCompleted || 0, avgPrepTimeMin: s.avgPrepTimeMin || 0,
       });
-      const delayedArr = delayed?.data || delayed || [];
-      setDelayedIds(new Set(delayedArr.map((d) => d.id || d._id)));
+      const delayedArr = unwrapList(delayed?.data || delayed || {}, "delayed");
+      setDelayedIds(new Set(delayedArr.map((d) => d.id || d._id || d.orderId || d.order?.id || d.order?._id)));
     } catch (err) {
-      showNotif(err.message, "error");
+      showNotif(err?.message || "Unable to load KDS data", "error");
     } finally {
       setLoading(false);
     }

@@ -92,7 +92,7 @@ export const TOP_PAGES = [
   { key: "home", label: "Home", icon: "Coffee", permission: null },
   { key: "menu", label: "Menu", icon: "ShoppingBag", permission: null },
   { key: "track", label: "Track Order", icon: "Truck", permission: null },
-  { key: "dashboard", label: "Dashboard", icon: "LayoutDashboard", permission: null },
+  { key: "dashboard", label: "Dashboard", icon: "LayoutDashboard", permission: "dashboard.view" },
   { key: "cook", label: "Cook", icon: "LayoutDashboard", permission: "kitchen.view" },
   ...WORKSPACE_PAGES.map((w) => ({ key: w.key, label: w.label, icon: w.icon, permission: w.permission })),
   { key: "tables", label: "Setup", icon: "SquareStack", permission: "tables.view" },
