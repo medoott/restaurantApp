@@ -38,7 +38,12 @@ export const getWaiterStats = asyncHandler(async (req, res) => {
 });
 
 export const reassignWaiterRequest = asyncHandler(async (req, res) => {
-  const result = await waiterManagementService.reassignWaiterRequest(req.params.id, { ...req.body, userId: req.user?._id });
+  const payload = req.body || {};
+  const result = await waiterManagementService.reassignWaiterRequest(
+    payload.requestId || req.params.id,
+    payload.toWaiterId || payload.newWaiterId || payload.waiterId,
+    req.user?._id || payload.userId,
+  );
   successResponse({ res, data: result, status: 200 });
 });
 
@@ -48,6 +53,10 @@ export const getWorkloadBalancing = asyncHandler(async (req, res) => {
 });
 
 export const autoAssignWaiter = asyncHandler(async (req, res) => {
-  const result = await waiterManagementService.autoAssignWaiter(req.body);
+  const payload = req.body || {};
+  const result = await waiterManagementService.autoAssignWaiter(
+    payload.tableNumber ?? payload.orderId ?? payload.id,
+    payload.requestType ?? payload.type,
+  );
   successResponse({ res, data: result, status: 200 });
 });
