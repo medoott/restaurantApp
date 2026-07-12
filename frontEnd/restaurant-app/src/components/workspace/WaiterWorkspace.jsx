@@ -39,6 +39,13 @@ function timeElapsed(dateString) {
   return `${hrs}h ${mins % 60}m`;
 }
 
+function formatDisplayValue(value, fallback = "") {
+  if (typeof value === "string" && value.trim()) {
+    return value.replace(/_/g, " ");
+  }
+  return fallback;
+}
+
 export default function WaiterWorkspace({ user, _access = {} }) {
   const toast = useToast();
   const [activeTab, setActiveTab] = useState("tables");
@@ -220,7 +227,7 @@ export default function WaiterWorkspace({ user, _access = {} }) {
               const tableNum = table.tableNumber || table.number;
               const guestName = table.guestName || table.customerName || table.visit?.customerName || "Guest";
               const guestCount = table.guestCount || table.capacity || 1;
-              const status = table.status || "dining";
+              const status = formatDisplayValue(table.status, "dining");
               const seatedAt = table.seatedAt || table.createdAt || table.visit?.createdAt;
               const orderCount = table.orderCount || table.orders?.length || 0;
               const isExpanded = expandedTable === (table._id || table.id);
@@ -243,7 +250,7 @@ export default function WaiterWorkspace({ user, _access = {} }) {
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${STATUS_BADGES[status] || "bg-stone-100 text-stone-600"}`}>
-                          {status.replace("_", " ")}
+                          {status}
                         </span>
                       </div>
                     </div>
@@ -311,7 +318,7 @@ export default function WaiterWorkspace({ user, _access = {} }) {
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-start gap-3 flex-1 min-w-0">
                     <span className={`px-2.5 py-1 rounded-lg text-[10px] font-medium ring-1 shrink-0 ${REQUEST_COLORS[req.type] || "bg-stone-50 text-stone-700 ring-stone-200"}`}>
-                      {REQUEST_LABELS[req.type] || req.type?.replace("_", " ") || "Request"}
+                      {REQUEST_LABELS[req.type] || formatDisplayValue(req.type, "Request")}
                     </span>
                     <div className="min-w-0">
                       <p className="text-sm font-semibold text-[#3B2515]">Table {req.tableNumber}</p>
@@ -389,7 +396,7 @@ export default function WaiterWorkspace({ user, _access = {} }) {
                           del.status === "picked_up" ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200" :
                           "bg-stone-50 text-stone-600 ring-1 ring-stone-200"
                         }`}>
-                          {del.status.replace("_", " ")}
+                          {formatDisplayValue(del.status, "Pending")}
                         </span>
                       </div>
                       <div className="flex items-center gap-1.5 text-xs text-[#9C8268]">
